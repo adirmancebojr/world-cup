@@ -1,0 +1,10 @@
+output,script,inputs
+01_raw_data/results.csv,03_pipeline/01_fetch_raw.py,
+01_raw_data/shootouts.csv,03_pipeline/01_fetch_raw.py,
+01_raw_data/worldcup2026.json,03_pipeline/01_fetch_raw.py,
+02_processed_data/matches.csv,03_pipeline/02_clean.py,01_raw_data/results.csv
+02_processed_data/wc2026_matches.csv,03_pipeline/02_clean.py,01_raw_data/results.csv;01_raw_data/worldcup2026.json
+02_processed_data/name_map.csv,03_pipeline/02_clean.py,01_raw_data/results.csv;01_raw_data/worldcup2026.json
+02_processed_data/bracket.json,03_pipeline/02_clean.py,01_raw_data/worldcup2026.json
+01_raw_data/manifest.json,03_pipeline/01_fetch_raw.py,
+02_processed_data/cleaning_log.txt,03_pipeline/02_clean.py,01_raw_data/results.csv;01_raw_data/worldcup2026.json

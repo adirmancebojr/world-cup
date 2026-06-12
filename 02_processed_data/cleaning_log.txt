@@ -1,0 +1,5 @@
+anomaly: leading-zero score '00' at row 49405 (2026-06-11 Mexico v South Africa) -> 0
+played matches: 49,407 (1872-11-30 -> 2026-06-11)
+name map: openfootball 'Bosnia & Herzegovina' -> results 'Bosnia and Herzegovina'
+name map: openfootball 'USA' -> results 'United States'
+cross-source score mismatches: 0

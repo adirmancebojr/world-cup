@@ -1,0 +1,20 @@
+check,value,ok
+sum p_r32 == 32,31.999999999999996,True
+sum p_r16 == 16,16.0,True
+sum p_qf == 8,8.0,True
+sum p_sf == 4,4.0,True
+sum p_final == 2,2.0,True
+sum p_champion == 1,1.0,True
+per-team monotone across stages,1.0,True
+"group A expected qualifiers in [2,3]",2.66045,True
+"group B expected qualifiers in [2,3]",2.61195,True
+"group C expected qualifiers in [2,3]",2.673,True
+"group D expected qualifiers in [2,3]",2.7363,True
+"group E expected qualifiers in [2,3]",2.6721999999999997,True
+"group F expected qualifiers in [2,3]",2.6830999999999996,True
+"group G expected qualifiers in [2,3]",2.7071500000000004,True
+"group H expected qualifiers in [2,3]",2.55605,True
+"group I expected qualifiers in [2,3]",2.68795,True
+"group J expected qualifiers in [2,3]",2.65515,True
+"group K expected qualifiers in [2,3]",2.6792,True
+"group L expected qualifiers in [2,3]",2.6775,True

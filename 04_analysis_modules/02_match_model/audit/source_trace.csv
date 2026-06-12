@@ -1,0 +1,6 @@
+output,script,inputs
+04_analysis_modules/02_match_model/tables/backtest_metrics.csv,04_analysis_modules/02_match_model/01_backtest.py,02_processed_data/matches_elo.csv
+04_analysis_modules/02_match_model/tables/backtest_predictions.csv,04_analysis_modules/02_match_model/01_backtest.py,02_processed_data/matches_elo.csv
+04_analysis_modules/02_match_model/tables/calibration.csv,04_analysis_modules/02_match_model/01_backtest.py,02_processed_data/matches_elo.csv
+04_analysis_modules/02_match_model/figures/calibration.png,04_analysis_modules/02_match_model/01_backtest.py,02_processed_data/matches_elo.csv
+04_analysis_modules/02_match_model/tables/model_params.json,04_analysis_modules/02_match_model/01_backtest.py,02_processed_data/matches_elo.csv

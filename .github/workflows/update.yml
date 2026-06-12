@@ -1,0 +1,35 @@
+# Scheduled data + model refresh (D04: the git history is the audit log).
+# Runs the frozen pipeline only — the backtest/model fit is NOT re-run
+# (model parameters are frozen for the tournament per the analysis spec).
+name: update
+on:
+  schedule:
+    - cron: "23 2,8,14,20 * * *"   # 4x daily; last North-America kickoffs end ~06:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: update
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: run pipeline
+        run: |
+          python 03_pipeline/01_fetch_raw.py
+          python 03_pipeline/02_clean.py
+          python 04_analysis_modules/01_team_strength/01_compute_elo.py
+          WC_SKIP_STABILITY=1 python 04_analysis_modules/03_simulation/01_simulate.py
+          python 03_pipeline/03_build_site_data.py
+      - name: commit refreshed data
+        run: |
+          git config user.name "wc26-pulse-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "data refresh $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

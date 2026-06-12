@@ -1,0 +1,4 @@
+metric,formula,filters,units,period,population,alternatives_considered,output_file,caveats
+pooled_log_loss_model,-mean(log p_observed),WC matches only,nats,WC 2014+2018+2022,192 held-out matches,"RPS (also reported); Brier (rejected: log-loss pre-registered)",tables/backtest_metrics.csv,knockout scores include extra time
+pooled_log_loss_raw_elo,-mean(log p_observed),WC matches only,nats,WC 2014+2018+2022,192 held-out matches,"uniform baseline (also reported)",tables/backtest_metrics.csv,draw rate from each fit window
+calibration_max_gap,max |p_mean - obs_freq| over bins n>=30,10 equal-width bins,probability,WC 2014+2018+2022,576 (match x outcome) pairs,"20 bins (rejected: bins fall under n=30)",tables/calibration.csv,6 of 10 bins meet n>=30

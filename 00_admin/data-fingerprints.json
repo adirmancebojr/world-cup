@@ -1,0 +1,94 @@
+{
+  "02_processed_data/bracket.json": [
+    {
+      "date": "2026-06-12",
+      "sha256": "a68b79ed02623c99",
+      "bytes": 7189
+    }
+  ],
+  "02_processed_data/cleaning_log.txt": [
+    {
+      "date": "2026-06-12",
+      "sha256": "6d64998fc00ce551",
+      "bytes": 307
+    }
+  ],
+  "02_processed_data/matches.csv": [
+    {
+      "date": "2026-06-12",
+      "sha256": "37e30e88eaec485e",
+      "bytes": 3718953,
+      "rows": 49407,
+      "columns": 9,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral"
+      ]
+    }
+  ],
+  "02_processed_data/matches_elo.csv": [
+    {
+      "date": "2026-06-12",
+      "sha256": "666bc8c2f420258d",
+      "bytes": 5566235,
+      "rows": 49407,
+      "columns": 11,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "r_home_pre",
+        "r_away_pre"
+      ]
+    }
+  ],
+  "02_processed_data/name_map.csv": [
+    {
+      "date": "2026-06-12",
+      "sha256": "6400228536fef997",
+      "bytes": 873,
+      "rows": 48,
+      "columns": 2,
+      "column_names": [
+        "openfootball",
+        "canonical"
+      ]
+    }
+  ],
+  "02_processed_data/wc2026_matches.csv": [
+    {
+      "date": "2026-06-12",
+      "sha256": "5658c6469c72a029",
+      "bytes": 7347,
+      "rows": 72,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "group",
+        "match_num",
+        "ground"
+      ]
+    }
+  ]
+}

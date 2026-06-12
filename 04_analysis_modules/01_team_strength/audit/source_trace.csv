@@ -1,0 +1,6 @@
+output,script,inputs
+02_processed_data/matches_elo.csv,04_analysis_modules/01_team_strength/01_compute_elo.py,02_processed_data/matches.csv
+04_analysis_modules/01_team_strength/tables/elo_current.csv,04_analysis_modules/01_team_strength/01_compute_elo.py,02_processed_data/matches.csv
+04_analysis_modules/01_team_strength/tables/elo_wc48.csv,04_analysis_modules/01_team_strength/01_compute_elo.py,02_processed_data/matches.csv;02_processed_data/wc2026_matches.csv
+04_analysis_modules/01_team_strength/figures/elo_top16.png,04_analysis_modules/01_team_strength/01_compute_elo.py,02_processed_data/matches.csv
+04_analysis_modules/01_team_strength/figures/goals_dist.png,04_analysis_modules/01_team_strength/01_compute_elo.py,02_processed_data/matches.csv
