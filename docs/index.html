@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WC26 Pulse — open World Cup 2026 odds & stats</title>
 <meta name="description" content="World Cup 2026 statistics and transparent, auditable predictions — updated as the cup progresses. Free data, open model, honest backtests.">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./style.css?v=4">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
@@ -21,7 +21,7 @@
     <a href="#matches">Matches</a>
     <a href="#groups">Groups</a>
     <a href="#scorers">Scorers</a>
-    <a href="https://github.com/REPO_PLACEHOLDER/blob/main/MODEL.md" class="badge" title="Pre-registered, backtested, and honest about what failed">⚖ honest model</a>
+    <a href="./MODEL.md" class="badge" title="Pre-registered, backtested, and honest about what failed">⚖ honest model</a>
   </nav>
   <div class="updated" id="updated">…</div>
 </header>
@@ -30,8 +30,9 @@
   <canvas id="scene"></canvas>
   <div id="hero-copy">
     <h1>Who wins the World Cup?</h1>
-    <p>Every bar is a team; height is its title chance — recomputed from public data after every match.
-       Drag to orbit · hover to inspect · click for the full ladder.</p>
+    <p>All 48 teams raised from the map by their title chance — flags fill each team's territory, while height
+       carries the win probability. Recomputed from public data after every match. Drag to spin · hover a
+       nation · click for its run to the final.</p>
   </div>
   <div id="tooltip" hidden></div>
   <aside id="team-panel" hidden>
@@ -50,6 +51,11 @@
 
   <section id="matches">
     <h2>Matches <span class="h2-note">odds are the raw-Elo headline model · scorelines are experimental</span></h2>
+    <div id="day-nav">
+      <button id="day-prev" aria-label="previous day">‹</button>
+      <div id="day-strip"></div>
+      <button id="day-next" aria-label="next day">›</button>
+    </div>
     <div id="match-list"></div>
   </section>
 
@@ -73,7 +79,7 @@
     <p><strong>The honest part:</strong> we pre-registered a fancier Poisson scoring model, tested it on the
       2014/2018/2022 World Cups — and it lost to the simple Elo baseline, twice. So the baseline gets the
       headline and the fancy model is demoted to "experimental" scoreline heatmaps. The full story, math,
-      and every logged decision: <a href="https://github.com/REPO_PLACEHOLDER/blob/main/MODEL.md">MODEL.md</a>.
+      and every logged decision: <a href="./MODEL.md">MODEL.md</a>.
       The entire prediction history is the repository's git log.</p>
   </section>
 </main>
@@ -81,9 +87,11 @@
 <footer>
   Data: <a href="https://github.com/martj42/international_results">martj42/international_results</a> (CC0-1.0) ·
   <a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a> (public domain) ·
+  Map: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain) ·
+  Flags: <a href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT) ·
   Built with <a href="https://threejs.org">three.js</a> · Not affiliated with FIFA · No betting advice — entertainment &amp; education only.
 </footer>
 
-<script type="module" src="./main.js"></script>
+<script type="module" src="./main.js?v=11"></script>
 </body>
 </html>

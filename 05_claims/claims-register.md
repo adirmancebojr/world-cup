@@ -13,28 +13,28 @@ A claim cannot be `supported` until its challenge passes and a human signs off.
 - **History:** 2026-06-12 proposed (pre-registered in spec before any fitting); 2026-06-12 challenge run → not_supported (pooled log-loss 0.9858 vs raw-Elo 0.9831; beats raw-Elo in 1/3 tournaments). Remediation options awaiting owner decision; 2026-06-12 owner chose (a) → D06 Dixon-Coles re-run also failed (pooled 0.9870; 1/3 tournaments) → D06 rule triggered fallback (b): raw-Elo headline, Poisson demoted to experimental (D07). C01 closed as not_supported.
 
 ## C02: Probabilities are calibrated
-- **Status:** testing (challenge PASSED — `supported` proposed, awaiting owner signature)
+- **Status:** supported (signed Adir 2026-06-12)
 - **Claim:** Predicted outcome probabilities match observed frequencies.
 - **Metric & population:** reliability curve, 10 bins, pooled backtest predictions.
 - **Challenge:** max calibration gap < 10pp in bins with n ≥ 30.
 - **Scripts:** 04_analysis_modules/02_match_model/01_backtest.py
 - **Findings:** findings/2026-06-12_c02-calibration.md
-- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (max gap 6.9pp)
+- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (max gap 6.9pp); 2026-06-12 signed `supported` by Adir
 
 ## C03: Tournament simulation is internally consistent
-- **Status:** testing (challenge PASSED — `supported` proposed, awaiting owner signature)
+- **Status:** supported (signed Adir 2026-06-12)
 - **Claim:** Monte Carlo advancement/champion probabilities respect all structural identities of the 2026 format.
 - **Metric & population:** Σ P(champion)=1; per-group qualifier expectations; per-team round monotonicity; 20k sims.
 - **Challenge:** every identity holds within Monte Carlo error.
 - **Scripts:** 04_analysis_modules/03_simulation/01_simulate.py
 - **Findings:** findings/2026-06-12_c03-simulation-consistency.md
-- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (all identities exact, monotone); 2026-06-12 re-challenged and passed under D07 simulator (findings/2026-06-12_c03-c04-rerun-under-d07.md)
+- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (all identities exact, monotone); 2026-06-12 re-challenged and passed under D07 simulator (findings/2026-06-12_c03-c04-rerun-under-d07.md); 2026-06-12 signed `supported` by Adir
 
 ## C04: Outputs are seed-stable
-- **Status:** testing (challenge PASSED — `supported` proposed, awaiting owner signature)
+- **Status:** supported (signed Adir 2026-06-12)
 - **Claim:** Published champion odds do not depend materially on the random seed.
 - **Metric & population:** max absolute spread of any team's champion probability across 5 seeds × 20k sims.
 - **Challenge:** spread < 1.5pp for every team.
 - **Scripts:** 04_analysis_modules/03_simulation/01_simulate.py
 - **Findings:** findings/2026-06-12_c04-seed-stability.md
-- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (max spread 0.71pp); 2026-06-12 re-challenged and passed under D07 simulator (max spread 0.70pp on final regeneration)
+- **History:** 2026-06-12 proposed; 2026-06-12 challenge passed (max spread 0.71pp); 2026-06-12 re-challenged and passed under D07 simulator (max spread 0.70pp on final regeneration); 2026-06-12 signed `supported` by Adir

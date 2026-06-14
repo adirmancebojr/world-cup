@@ -8,3 +8,6 @@ output,script,inputs
 02_processed_data/bracket.json,03_pipeline/02_clean.py,01_raw_data/worldcup2026.json
 01_raw_data/manifest.json,03_pipeline/01_fetch_raw.py,
 02_processed_data/cleaning_log.txt,03_pipeline/02_clean.py,01_raw_data/results.csv;01_raw_data/worldcup2026.json
+02_processed_data/wc2026_shootouts.csv,03_pipeline/02_clean.py,01_raw_data/shootouts.csv
+docs/data/site_data.json,03_pipeline/03_build_site_data.py,04_analysis_modules/03_simulation/tables/team_probs.csv;04_analysis_modules/03_simulation/tables/match_probs_group.csv;04_analysis_modules/01_team_strength/tables/elo_wc48.csv;04_analysis_modules/02_match_model/tables/model_params.json;02_processed_data/wc2026_matches.csv;01_raw_data/worldcup2026.json;02_processed_data/name_map.csv
+docs/MODEL.md,03_pipeline/03_build_site_data.py,MODEL.md

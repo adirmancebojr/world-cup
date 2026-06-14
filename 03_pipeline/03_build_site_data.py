@@ -1,8 +1,10 @@
 """Assemble docs/data/site_data.json for the static Three.js site.
 Pure repackaging — every number comes from a module output (see source_trace)."""
 import json
+import re
 import sys
-from datetime import datetime, timezone
+import unicodedata
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -35,6 +37,42 @@ def code(team: str) -> str:
     return FIFA_CODES.get(team, team.upper().replace(" ", "")[:3])
 
 
+def slug(value: str) -> str:
+    ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "-", ascii_value.lower()).strip("-")
+
+
+def match_id(date: str, home: str, away: str) -> str:
+    return f"{date}-{slug(home)}-{slug(away)}"
+
+
+def parse_kickoff_utc(date: str, time_label: str) -> str | None:
+    """Convert openfootball labels like "12:00 UTC-7" to a UTC ISO string."""
+    match = re.fullmatch(r"(\d{1,2}):(\d{2}) UTC([+-]\d{1,2})(?::?(\d{2}))?", time_label or "")
+    if not match:
+        return None
+    hour, minute, offset_hour, offset_minute = match.groups()
+    offset = timedelta(hours=int(offset_hour), minutes=int(offset_minute or 0))
+    local = datetime.fromisoformat(f"{date}T{int(hour):02d}:{minute}:00").replace(tzinfo=timezone(offset))
+    return local.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def goal_event(goal: dict, team: str, side: str) -> dict:
+    details = []
+    if goal.get("penalty"):
+        details.append("penalty")
+    if goal.get("owngoal"):
+        details.append("own goal")
+    return {
+        "minute": str(goal.get("minute", "")),
+        "team": team,
+        "side": side,
+        "player": goal.get("name", ""),
+        "type": "goal",
+        "detail": ", ".join(details),
+    }
+
+
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     tp = pd.read_csv(ROOT / "04_analysis_modules/03_simulation/tables/team_probs.csv")
@@ -45,6 +83,42 @@ def main() -> int:
     manifest = json.loads((ROOT / "01_raw_data/manifest.json").read_text())
     of = json.loads((ROOT / "01_raw_data/worldcup2026.json").read_text())
     name_map = dict(pd.read_csv(ROOT / "02_processed_data/name_map.csv").to_numpy())
+    fixture_meta = {}
+    for om in of["matches"]:
+        if not str(om.get("group", "")).startswith("Group"):
+            continue
+        teams_key = tuple(sorted((
+            name_map.get(om.get("team1"), om.get("team1")),
+            name_map.get(om.get("team2"), om.get("team2")),
+        )))
+        team1 = name_map.get(om.get("team1"), om.get("team1"))
+        team2 = name_map.get(om.get("team2"), om.get("team2"))
+        key = (
+            om.get("date"),
+            om.get("group"),
+            teams_key,
+        )
+        kickoff_local = om.get("time")
+        ft = (om.get("score") or {}).get("ft")
+        ht = (om.get("score") or {}).get("ht")
+        fixture_meta[key] = dict(
+            source_home=team1,
+            source_away=team2,
+            kickoff_local=kickoff_local,
+            kickoff_utc=parse_kickoff_utc(om.get("date"), kickoff_local) if kickoff_local else None,
+            feed=dict(
+                source="openfootball/worldcup.json",
+                status="played" if ft else "scheduled",
+                home_score=int(ft[0]) if ft else None,
+                away_score=int(ft[1]) if ft else None,
+                ht_home=int(ht[0]) if ht else None,
+                ht_away=int(ht[1]) if ht else None,
+                events=(
+                    [goal_event(g, team1, "home") for g in (om.get("goals1") or [])]
+                    + [goal_event(g, team2, "away") for g in (om.get("goals2") or [])]
+                ),
+            ),
+        )
 
     # standings from played group matches (display order: pts, gd, gf)
     stats = {t: dict(played=0, pts=0, gf=0, ga=0) for t in tp["team"]}
@@ -75,7 +149,24 @@ def main() -> int:
 
     matches = []
     for r in wc[wc["group"].notna()].sort_values("date").itertuples():
-        m = dict(date=r.date, home=r.home_team, away=r.away_team, group=r.group, ground=r.ground)
+        m = dict(id=match_id(r.date, r.home_team, r.away_team), date=r.date,
+                 home=r.home_team, away=r.away_team, group=r.group, ground=r.ground)
+        meta = fixture_meta.get((r.date, r.group, tuple(sorted((r.home_team, r.away_team)))))
+        if meta:
+            feed = meta["feed"]
+            if (r.home_team, r.away_team) != (meta["source_home"], meta["source_away"]):
+                feed = {
+                    **feed,
+                    "home_score": feed["away_score"],
+                    "away_score": feed["home_score"],
+                    "ht_home": feed["ht_away"],
+                    "ht_away": feed["ht_home"],
+                    "events": [
+                        {**e, "side": "home" if e["side"] == "away" else "away"}
+                        for e in feed["events"]
+                    ],
+                }
+            m.update(kickoff_local=meta["kickoff_local"], kickoff_utc=meta["kickoff_utc"], feed=feed)
         if pd.notna(r.home_score):
             m.update(status="played", hs=int(r.home_score), as_=int(r.away_score))
         else:
@@ -109,6 +200,7 @@ def main() -> int:
         teams=teams, groups=groups, matches=matches, scorers=top_scorers,
     )
     (OUT / "site_data.json").write_text(json.dumps(data, ensure_ascii=False))
+    (ROOT / "docs" / "MODEL.md").write_text((ROOT / "MODEL.md").read_text())
     print(f"site_data.json: {len(teams)} teams, {len(matches)} matches, {data['matches_played']} played, "
           f"{len(top_scorers)} scorers, generated {data['generated_utc']}")
     return 0

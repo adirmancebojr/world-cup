@@ -90,5 +90,21 @@
         "ground"
       ]
     }
+  ],
+  "02_processed_data/wc2026_shootouts.csv": [
+    {
+      "date": "2026-06-12",
+      "sha256": "9af6d17e2acdb3bc",
+      "bytes": 46,
+      "rows": 0,
+      "columns": 5,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "winner",
+        "first_shooter"
+      ]
+    }
   ]
 }
