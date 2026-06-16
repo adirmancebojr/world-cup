@@ -5,9 +5,10 @@ const $ = (s) => document.querySelector(s);
 const pct = (p, d = 1) => (p * 100).toFixed(d) + "%";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const [data, geo] = await Promise.all([
+const [data, geo, history] = await Promise.all([
   fetch("./data/site_data.json", { cache: "no-store" }).then((r) => r.json()),
   fetch("./data/countries-110m.geojson").then((r) => r.json()),
+  fetch("./data/champion_history.json", { cache: "no-store" }).then((r) => r.ok ? r.json() : null).catch(() => null),
 ]);
 $("#updated").textContent = `results through ${data.results_through ?? "—"} · model run ${data.generated_utc}`;
 
@@ -532,10 +533,61 @@ const letters = Object.keys(data.groups).sort();
 const tmap = Object.fromEntries(data.teams.map((t) => [t.name, t]));
 const matchesById = Object.fromEntries(data.matches.map((m) => [m.id, m]));
 const byChamp = [...data.teams].sort((a, b) => b.p_champion - a.p_champion);
-$("#odds-list").innerHTML = byChamp.slice(0, 12).map((t, i) =>
-  `<div class="odds-row"><span class="rank">${i + 1}</span><span class="code" title="${t.name}">${t.code}</span>
-   <span class="bar"><i style="width:${(t.p_champion / byChamp[0].p_champion) * 100}%"></i></span>
-   <span class="val">${pct(t.p_champion)}</span></div>`).join("");
+
+// champion odds as an interactive time scrubber (bar-chart race) ----------
+const ROSTER = byChamp.slice(0, 12);
+const curOdds = Object.fromEntries(data.teams.map((t) => [t.code, t.p_champion]));
+const frames = (history?.snapshots ?? []).slice().sort((a, b) => a.matches_played - b.matches_played);
+if (!frames.length) frames.push({ t: data.results_through, matches_played: data.matches_played ?? 0, odds: curOdds });
+const ROW_H = 34;
+const oddsAt = (f, code) => f.odds[code] ?? curOdds[code] ?? 0;
+const maxOdds = Math.max(0.02, ...ROSTER.flatMap((t) => frames.map((f) => oddsAt(f, t.code))));
+const fmtDay = (iso) => iso ? new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "—";
+
+const oddsList = $("#odds-list");
+oddsList.style.height = ROSTER.length * ROW_H + "px";
+oddsList.innerHTML = "";
+const rowFor = new Map();
+for (const t of ROSTER) {
+  const row = document.createElement("div");
+  row.className = "odds-row";
+  row.innerHTML = `<span class="rank"></span><span class="code" title="${esc(t.name)}">${esc(t.code)}</span><span class="bar"><i></i></span><span class="val"></span>`;
+  oddsList.appendChild(row);
+  rowFor.set(t.code, { row, rank: row.querySelector(".rank"), bar: row.querySelector("i"), val: row.querySelector(".val") });
+}
+function renderOddsAt(i) {
+  const f = frames[i];
+  [...ROSTER].sort((a, b) => oddsAt(f, b.code) - oddsAt(f, a.code)).forEach((t, r) => {
+    const ref = rowFor.get(t.code), o = oddsAt(f, t.code);
+    ref.row.style.transform = `translateY(${r * ROW_H}px)`;
+    ref.rank.textContent = r + 1;
+    ref.bar.style.width = (o / maxOdds * 100).toFixed(1) + "%";
+    ref.val.textContent = pct(o);
+  });
+  const lbl = $("#odds-time-label");
+  if (lbl) lbl.textContent = `through ${fmtDay(f.t)} · ${f.matches_played} match${f.matches_played === 1 ? "" : "es"}`;
+}
+
+let cur = frames.length - 1, playing = false, timer = null;
+const timeBar = $("#odds-time"), scrub = $("#odds-scrub"), playBtn = $("#odds-play");
+if (timeBar && frames.length >= 2) {
+  timeBar.hidden = false;
+  scrub.max = frames.length - 1;
+  scrub.value = cur;
+  const setIndex = (i) => { cur = Math.max(0, Math.min(frames.length - 1, i)); scrub.value = cur; renderOddsAt(cur); };
+  const stop = () => { playing = false; clearInterval(timer); playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "play timeline"); };
+  $("#odds-prev").onclick = () => { stop(); setIndex(cur - 1); };
+  $("#odds-next").onclick = () => { stop(); setIndex(cur + 1); };
+  scrub.oninput = () => { stop(); setIndex(+scrub.value); };
+  playBtn.onclick = () => {
+    if (playing) return stop();
+    playing = true; playBtn.textContent = "⏸"; playBtn.setAttribute("aria-label", "pause timeline");
+    if (cur >= frames.length - 1) setIndex(0);
+    timer = setInterval(() => { cur >= frames.length - 1 ? stop() : setIndex(cur + 1); }, 900);
+  };
+}
+renderOddsAt(cur);
+requestAnimationFrame(() => oddsList.classList.add("animate")); // enable transitions after initial layout
 
 const compactDateTime = (() => {
   try {
@@ -588,13 +640,27 @@ function matchPhase(m) {
 function phaseLabel(m) {
   const phase = matchPhase(m);
   if (phase === "played" && m.feed?.status === "played" && m.status !== "played") return "feed final";
-  return { played: "final", live: "near live", awaiting: "awaiting result", upcoming: "scheduled" }[phase];
+  return { played: "final", live: "in progress", awaiting: "awaiting result", upcoming: "scheduled" }[phase];
 }
 const minuteSort = (minute) => {
   const [base, extra] = String(minute ?? "").split("+");
   return (parseInt(base, 10) || 0) + (parseInt(extra, 10) || 0) / 100;
 };
 const statRow = (label, value) => value ? `<div class="stat-row"><span>${esc(label)}</span><strong>${value}</strong></div>` : "";
+const statRowHtml = (label, value) => value ? `<div class="stat-row"><span>${esc(label)}</span><strong>${value}</strong></div>` : "";
+const outcomeText = (m, outcome) => ({ H: `${m.home} win`, D: "draw", A: `${m.away} win` }[outcome] ?? "—");
+const outcomeProb = (p, outcome) => ({ H: p?.p_home, D: p?.p_draw, A: p?.p_away }[outcome]);
+const hitText = (hit) => hit ? "hit" : "miss";
+const predictionMark = (hit) => `<span class="prediction-mark ${hit ? "hit" : "miss"}">${hitText(hit)}</span>`;
+const scoreProbText = (p) => typeof p?.top_score_prob === "number" ? ` (${pct(p.top_score_prob, 0)})` : "";
+function predictionChips(m) {
+  const p = m.prediction;
+  if (!p) return "";
+  return `<div class="prediction-chips">
+    <span class="pred-chip ${p.outcome_hit ? "hit" : "miss"}">outcome ${hitText(p.outcome_hit)}</span>
+    <span class="pred-chip ${p.score_hit ? "hit" : "miss"}">score ${hitText(p.score_hit)}</span>
+  </div>`;
+}
 const modelState = (m) => {
   if (m.status === "played") return "incorporated";
   if (scoreFor(m)) return "pending model update";
@@ -612,7 +678,7 @@ const matchCard = (m) => {
   const href = `#match/${encodeURIComponent(m.id)}`;
   const status = `<span class="match-status ${phase}">${phaseLabel(m)}</span>`;
   if (score)
-    return `<a class="match match-link ${phase}" href="${href}" aria-label="Open stats for ${esc(m.home)} vs ${esc(m.away)}">${head}<div class="m-teams"><span>${esc(m.home)}</span><span class="m-score">${score.home}–${score.away}</span><span>${esc(m.away)}</span></div>${status}</a>`;
+    return `<a class="match match-link ${phase}" href="${href}" aria-label="Open stats for ${esc(m.home)} vs ${esc(m.away)}">${head}<div class="m-teams"><span>${esc(m.home)}</span><span class="m-score">${score.home}–${score.away}</span><span>${esc(m.away)}</span></div>${predictionChips(m)}${status}</a>`;
   const exp = m.exp_scores ? `<div class="exp-scores"><em>EXPERIMENTAL</em>likely scores: ${esc(m.exp_scores)}</div>` : "";
   return `<a class="match match-link ${phase}" href="${href}" aria-label="Open stats for ${esc(m.home)} vs ${esc(m.away)}">${head}
     <div class="m-teams"><span>${esc(m.home)}</span><span style="color:var(--dim)">vs</span><span>${esc(m.away)}</span></div>
@@ -621,11 +687,31 @@ const matchCard = (m) => {
 };
 
 function modelSnapshot(m) {
+  if (m.prediction) {
+    const p = m.prediction;
+    return `<div class="probbar detail-prob"><span class="ph" style="width:${p.p_home * 100}%"></span><span class="pd" style="width:${p.p_draw * 100}%"></span><span class="pa" style="width:${p.p_away * 100}%"></span></div>
+      <div class="probpct"><span>${esc(m.home)} ${pct(p.p_home, 0)}</span><span>draw ${pct(p.p_draw, 0)}</span><span>${esc(m.away)} ${pct(p.p_away, 0)}</span></div>
+      <div class="exp-scores"><em>PRE-MATCH</em>top score: ${esc(p.top_score)}${scoreProbText(p)}</div>`;
+  }
   if (typeof m.p_home !== "number")
     return `<p class="quiet">Current run has already absorbed this result.</p>`;
   const exp = m.exp_scores ? `<div class="exp-scores"><em>EXPERIMENTAL</em>likely scores: ${esc(m.exp_scores)}</div>` : "";
   return `<div class="probbar detail-prob"><span class="ph" style="width:${m.p_home * 100}%"></span><span class="pd" style="width:${m.p_draw * 100}%"></span><span class="pa" style="width:${m.p_away * 100}%"></span></div>
     <div class="probpct"><span>${esc(m.home)} ${pct(m.p_home, 0)}</span><span>draw ${pct(m.p_draw, 0)}</span><span>${esc(m.away)} ${pct(m.p_away, 0)}</span></div>${exp}`;
+}
+function predictionPanel(m) {
+  const p = m.prediction;
+  if (!p) return `<p class="quiet">No completed-match prediction check yet.</p>`;
+  const predProb = outcomeProb(p, p.pred_outcome);
+  return `
+    ${statRow("pre-match call", `${esc(outcomeText(m, p.pred_outcome))}${typeof predProb === "number" ? ` (${pct(predProb, 0)})` : ""}`)}
+    ${statRow("actual outcome", esc(outcomeText(m, p.actual_outcome)))}
+    ${statRowHtml("outcome result", predictionMark(p.outcome_hit))}
+    ${statRow("top score", `${esc(p.top_score)}${scoreProbText(p)}`)}
+    ${statRow("actual score", esc(p.actual_score))}
+    ${statRowHtml("score result", predictionMark(p.score_hit))}
+    ${statRow("actual-outcome prob", typeof p.prob_actual === "number" ? pct(p.prob_actual, 1) : "")}
+    ${statRow("log loss", typeof p.logloss === "number" ? p.logloss.toFixed(3) : "")}`;
 }
 function moments(m) {
   const events = [...(m.feed?.events ?? [])].sort((a, b) => minuteSort(a.minute) - minuteSort(b.minute));
@@ -666,6 +752,10 @@ function renderMatchDetail(m) {
       <section class="stat-panel">
         <h3>Model Snapshot</h3>
         ${modelSnapshot(m)}
+      </section>
+      <section class="stat-panel">
+        <h3>Prediction Check</h3>
+        ${predictionPanel(m)}
       </section>
       <section class="stat-panel wide">
         <h3>Moments</h3>
@@ -728,14 +818,84 @@ function renderRoute() {
 window.addEventListener("hashchange", renderRoute);
 renderRoute();
 
-$("#group-grid").innerHTML = letters.map((g) => {
-  const names = data.groups[g];
-  const rows = names.map((n) => {
+function renderPredictionResults() {
+  const summary = data.prediction_summary;
+  const rows = data.matches.filter((m) => m.prediction).sort((a, b) =>
+    a.date === b.date ? a.id.localeCompare(b.id) : a.date.localeCompare(b.date));
+  if (!summary || !summary.n) {
+    $("#prediction-summary").innerHTML = `<p class="quiet">No completed matches to grade yet.</p>`;
+    $("#prediction-list").innerHTML = "";
+    return;
+  }
+  const metric = (label, value, sub = "") => `<div class="metric-card"><span>${esc(label)}</span><strong>${esc(value)}</strong>${sub ? `<em>${esc(sub)}</em>` : ""}</div>`;
+  $("#prediction-summary").innerHTML = `<div class="prediction-scoreboard">
+    ${metric("Outcome calls", `${summary.outcome_correct}/${summary.n}`, `${pct(summary.outcome_pct, 0)} correct`)}
+    ${metric("Exact scores", `${summary.score_correct}/${summary.n}`, `${pct(summary.score_pct, 0)} correct`)}
+    ${metric("Mean log loss", Number(summary.mean_logloss).toFixed(3), `uniform ${Number(summary.uniform_logloss).toFixed(3)}`)}
+    ${metric("Avg actual prob", pct(summary.mean_prob_actual, 1), `through ${summary.results_through ?? "—"}`)}
+  </div>`;
+  $("#prediction-list").innerHTML = `<div class="prediction-table-wrap"><table class="prediction-table">
+    <tr><th>match</th><th>actual</th><th>outcome call</th><th>top score</th></tr>
+    ${rows.map((m) => {
+      const p = m.prediction;
+      const predProb = outcomeProb(p, p.pred_outcome);
+      const date = dayLabel(m.date, { month: "short", day: "numeric" });
+      return `<tr>
+        <td><a href="#match/${encodeURIComponent(m.id)}">${esc(date)} · ${esc(m.home)} vs ${esc(m.away)}</a></td>
+        <td>${esc(p.actual_score)}</td>
+        <td>${esc(outcomeText(m, p.pred_outcome))}${typeof predProb === "number" ? ` ${pct(predProb, 0)}` : ""} ${predictionMark(p.outcome_hit)}</td>
+        <td>${esc(p.top_score)}${scoreProbText(p)} ${predictionMark(p.score_hit)}</td>
+      </tr>`;
+    }).join("")}
+  </table></div>`;
+}
+renderPredictionResults();
+
+const groupMatches = (g) => data.matches
+  .filter((m) => m.group === `Group ${g}`)
+  .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+const groupStandings = (g) => {
+  const rows = data.groups[g].map((n) => {
     const t = tmap[n];
-    return `<tr><td title="${t.name}">${t.code}</td><td>${t.played}</td><td>${t.pts}</td><td>${t.gf - t.ga}</td><td class="adv">${pct(t.p_r32, 0)}</td></tr>`;
+    return `<tr><td title="${esc(t.name)}">${esc(t.code)}</td><td>${t.played}</td><td>${t.pts}</td><td>${t.gf - t.ga}</td><td class="adv">${pct(t.p_r32, 0)}</td></tr>`;
   }).join("");
-  return `<div class="group-card"><h3>GROUP ${g}</h3><table><tr><th>team</th><th>P</th><th>pts</th><th>GD</th><th>adv</th></tr>${rows}</table></div>`;
-}).join("");
+  return `<table class="group-standings"><tr><th>team</th><th>P</th><th>pts</th><th>GD</th><th>adv</th></tr>${rows}</table>`;
+};
+function renderGroupGrid() {
+  $("#group-grid").innerHTML = letters.map((g) =>
+    `<div class="group-card" role="button" tabindex="0" data-group="${esc(g)}"><h3>GROUP ${esc(g)}</h3>${groupStandings(g)}</div>`
+  ).join("");
+}
+function showGroupGrid() {
+  $("#group-grid").style.display = "";
+  $("#group-detail").style.display = "none";
+  $("#group-detail").innerHTML = "";
+}
+function openGroup(g) {
+  const list = groupMatches(g);
+  const body = list.length ? `<div class="match-grid">${list.map(matchCard).join("")}</div>` : `<p class="no-matches">No fixtures.</p>`;
+  $("#group-detail").innerHTML = `
+    <div class="detail-top"><button class="back-link" id="group-back">‹ all groups</button></div>
+    <div class="group-detail-head">Group ${esc(g)} <span class="h2-note">standings &amp; fixtures</span></div>
+    ${groupStandings(g)}
+    <div class="group-fixtures-head">Fixtures <span class="h2-note">past &amp; upcoming</span></div>
+    ${body}`;
+  $("#group-grid").style.display = "none";
+  $("#group-detail").style.display = "";
+  requestAnimationFrame(() => $("#groups").scrollIntoView({ block: "start" }));
+}
+$("#group-grid").addEventListener("click", (e) => {
+  const card = e.target.closest(".group-card");
+  if (card) openGroup(card.dataset.group);
+});
+$("#group-grid").addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const card = e.target.closest(".group-card");
+  if (card) { e.preventDefault(); openGroup(card.dataset.group); }
+});
+$("#group-detail").addEventListener("click", (e) => { if (e.target.closest("#group-back")) showGroupGrid(); });
+renderGroupGrid();
+showGroupGrid();
 
 $("#scorer-list").innerHTML = data.scorers.map((s) =>
   `<li>${s.name} <span class="s-goals">${s.goals}</span> <span class="s-team">${s.team}</span></li>`).join("");

@@ -11,6 +11,16 @@
       "date": "2026-06-12",
       "sha256": "6d64998fc00ce551",
       "bytes": 307
+    },
+    {
+      "date": "2026-06-14",
+      "sha256": "b06a3aa2ddff7749",
+      "bytes": 221
+    },
+    {
+      "date": "2026-06-15",
+      "sha256": "b30c9b7deb90e2b0",
+      "bytes": 221
     }
   ],
   "02_processed_data/matches.csv": [
@@ -19,6 +29,42 @@
       "sha256": "37e30e88eaec485e",
       "bytes": 3718953,
       "rows": 49407,
+      "columns": 9,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral"
+      ]
+    },
+    {
+      "date": "2026-06-14",
+      "sha256": "e178261e0a8486b9",
+      "bytes": 3719117,
+      "rows": 49409,
+      "columns": 9,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral"
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "sha256": "58de10318bbcafd3",
+      "bytes": 3719720,
+      "rows": 49417,
       "columns": 9,
       "column_names": [
         "date",
@@ -53,6 +99,46 @@
         "r_home_pre",
         "r_away_pre"
       ]
+    },
+    {
+      "date": "2026-06-14",
+      "sha256": "ceb5887263d43e68",
+      "bytes": 5566473,
+      "rows": 49409,
+      "columns": 11,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "r_home_pre",
+        "r_away_pre"
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "sha256": "c525093546a2a1fb",
+      "bytes": 5567376,
+      "rows": 49417,
+      "columns": 11,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "r_home_pre",
+        "r_away_pre"
+      ]
     }
   ],
   "02_processed_data/name_map.csv": [
@@ -73,6 +159,48 @@
       "date": "2026-06-12",
       "sha256": "5658c6469c72a029",
       "bytes": 7347,
+      "rows": 72,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "group",
+        "match_num",
+        "ground"
+      ]
+    },
+    {
+      "date": "2026-06-14",
+      "sha256": "4874b2afa0cfc62b",
+      "bytes": 7351,
+      "rows": 72,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "group",
+        "match_num",
+        "ground"
+      ]
+    },
+    {
+      "date": "2026-06-15",
+      "sha256": "7f6ca5263ecbbe8a",
+      "bytes": 7367,
       "rows": 72,
       "columns": 12,
       "column_names": [

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology — WC26 Pulse</title>
+<meta name="description" content="How WC26 Pulse builds transparent World Cup 2026 odds, grades predictions, and reports model failures.">
+<link rel="stylesheet" href="./style.css?v=7">
+</head>
+<body class="methodology-page">
+<header>
+  <a class="brand" href="./index.html" aria-label="WC26 Pulse home">WC26&nbsp;<span>PULSE</span></a>
+  <nav>
+    <a href="./index.html#odds">Odds</a>
+    <a href="./index.html#prediction-results">Results</a>
+    <a href="./index.html#matches">Matches</a>
+    <a href="./index.html#groups">Groups</a>
+    <a href="./index.html#scorers">Scorers</a>
+    <a href="./methodology.html" class="badge" aria-current="page" title="Read the model methodology and backtest notes">Methodology</a>
+    <a href="./agentic-ds.html" class="badge" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
+  </nav>
+</header>
+
+<main class="method-main">
+  <section class="method-hero">
+    <p class="method-kicker">Model card</p>
+    <h1>How the predictions work, exactly</h1>
+    <p>The headline odds come from a simple Elo baseline because it beat the fancier model in the pre-registered backtest. The site still publishes the experimental scoreline layer, but labels it as experimental and tracks both pieces against real results.</p>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-at-a-glance">
+    <h2 id="method-at-a-glance">At a glance</h2>
+    <div class="method-metrics">
+      <div class="metric-card">
+        <span>Headline model</span>
+        <strong>Raw Elo</strong>
+        <em>simple baseline won the test</em>
+      </div>
+      <div class="metric-card">
+        <span>Simulations</span>
+        <strong>20,000</strong>
+        <em>seeded Monte Carlo runs</em>
+      </div>
+      <div class="metric-card">
+        <span>Scorelines</span>
+        <strong>Poisson</strong>
+        <em>published as experimental</em>
+      </div>
+      <div class="metric-card">
+        <span>Tracking</span>
+        <strong>Final scores</strong>
+        <em>graded after public results land</em>
+      </div>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-principles">
+    <h2 id="method-principles">Principles</h2>
+    <div class="method-grid">
+      <article class="method-block">
+        <h3>Pre-register the test</h3>
+        <p>Metrics, baselines, data filters, and pass/fail thresholds were frozen before fitting the model. That prevents moving the goalposts after seeing results.</p>
+      </article>
+      <article class="method-block">
+        <h3>Keep failures visible</h3>
+        <p>The Poisson model failed its headline test, so it does not get top billing. It remains on the site only for scoreline context, with an experimental label.</p>
+      </article>
+      <article class="method-block">
+        <h3>Trace every number</h3>
+        <p>Each analysis module writes an audit trace. The scheduled pipeline commits updated inputs and outputs, so the prediction history can be diffed.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-data">
+    <h2 id="method-data">Data</h2>
+    <div class="method-table-wrap">
+      <table class="method-table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Used for</th>
+            <th>License</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://github.com/martj42/international_results">martj42/international_results</a></td>
+            <td>Historical internationals, Elo ratings, model fitting, 2026 results</td>
+            <td>CC0-1.0</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a></td>
+            <td>World Cup fixtures, groups, bracket, goalscorers</td>
+            <td>Public domain</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="method-note">Raw snapshots are checksummed, cleaned by script, and cross-checked before the site data is rebuilt.</p>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-pipeline">
+    <h2 id="method-pipeline">Pipeline</h2>
+    <ol class="method-steps">
+      <li>
+        <strong>Replay Elo from scratch.</strong>
+        <span>Every team starts at 1500, then roughly 49,000 men's internationals are replayed from 1872 onward.</span>
+      </li>
+      <li>
+        <strong>Publish raw-Elo match odds.</strong>
+        <span>The draw rate is estimated from recent competitive internationals; the remaining probability is split by Elo win expectancy.</span>
+      </li>
+      <li>
+        <strong>Generate experimental scorelines.</strong>
+        <span>A Poisson goal model estimates likely scores. It is useful context, but it failed the headline test.</span>
+      </li>
+      <li>
+        <strong>Simulate the tournament.</strong>
+        <span>20,000 futures run through the 2026 format, including group advancement, third-place slots, knockouts, and in-simulation Elo updates.</span>
+      </li>
+      <li>
+        <strong>Grade finished matches.</strong>
+        <span>Completed matches are scored against the prediction available before kickoff: outcome for Elo, exact score for Poisson.</span>
+      </li>
+    </ol>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-backtest">
+    <h2 id="method-backtest">Why raw Elo leads</h2>
+    <p class="method-copy">The pre-registered test used all 192 matches from World Cups 2014, 2018, and 2022. Each tournament was predicted sequentially, with no future results leaking into the model.</p>
+    <div class="method-table-wrap">
+      <table class="method-table">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Pooled log-loss</th>
+            <th>Beats raw Elo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Uniform one-third baseline</td>
+            <td>1.0986</td>
+            <td>n/a</td>
+          </tr>
+          <tr class="method-winner">
+            <td>Raw-Elo baseline</td>
+            <td>0.9831</td>
+            <td>headline model</td>
+          </tr>
+          <tr>
+            <td>Poisson model</td>
+            <td>0.9858</td>
+            <td>1 of 3 tournaments</td>
+          </tr>
+          <tr>
+            <td>Poisson + Dixon-Coles retry</td>
+            <td>0.9870</td>
+            <td>1 of 3 tournaments</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-tracking-heading">
+    <h2 id="method-tracking-heading">Current prediction tracking</h2>
+    <div id="method-tracking" class="method-metrics" aria-live="polite">
+      <div class="metric-card">
+        <span>Outcome calls</span>
+        <strong>Loading</strong>
+        <em>completed matches only</em>
+      </div>
+      <div class="metric-card">
+        <span>Exact scores</span>
+        <strong>Loading</strong>
+        <em>experimental Poisson</em>
+      </div>
+      <div class="metric-card">
+        <span>Mean log-loss</span>
+        <strong>Loading</strong>
+        <em>lower is better</em>
+      </div>
+      <div class="metric-card">
+        <span>Results through</span>
+        <strong>Loading</strong>
+        <em>public data delay applies</em>
+      </div>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-limitations">
+    <h2 id="method-limitations">Known limits</h2>
+    <div class="method-callout">
+      <p>No player-level injuries, suspensions, tactical changes, or squad news are modeled directly. Public result sources can lag real matches, so this site does not claim real-time coverage. Historical knockout scores follow the source dataset's extra-time convention, and lower group tie-break criteria are approximated when needed.</p>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-reproduce">
+    <h2 id="method-reproduce">Reproduce it</h2>
+    <p class="method-copy">The full math and command list live in <a href="./MODEL.md">MODEL.md</a>. The frozen spec and decision log are kept in the repository as audit artifacts.</p>
+    <pre class="method-code"><code>python3 04_analysis_modules/02_match_model/01_backtest.py
+python3 04_analysis_modules/02_match_model/02_track_predictions.py
+python3 04_analysis_modules/03_simulation/01_simulate.py
+python3 03_pipeline/03_build_site_data.py</code></pre>
+  </section>
+</main>
+
+<footer>
+  Data: <a href="https://github.com/martj42/international_results">martj42/international_results</a> (CC0-1.0) ·
+  <a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a> (public domain) ·
+  Map: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain) ·
+  Built with <a href="https://threejs.org">three.js</a> · Not affiliated with FIFA · No betting advice — entertainment &amp; education only.
+</footer>
+
+<script type="module">
+const fmtPct = (value) => `${Math.round((value ?? 0) * 100)}%`;
+const fmtNum = (value) => Number.isFinite(value) ? value.toFixed(3) : "—";
+
+try {
+  const response = await fetch("./data/site_data.json", { cache: "no-store" });
+  if (!response.ok) throw new Error(`site data ${response.status}`);
+  const data = await response.json();
+  const summary = data.prediction_summary;
+  const tracking = document.querySelector("#method-tracking");
+
+  if (summary && tracking) {
+    tracking.innerHTML = `
+      <div class="metric-card">
+        <span>Outcome calls</span>
+        <strong>${summary.outcome_correct}/${summary.n}</strong>
+        <em>${fmtPct(summary.outcome_pct)} most-likely W/D/L</em>
+      </div>
+      <div class="metric-card">
+        <span>Exact scores</span>
+        <strong>${summary.score_correct}/${summary.n}</strong>
+        <em>${fmtPct(summary.score_pct)} Poisson scoreline</em>
+      </div>
+      <div class="metric-card">
+        <span>Mean log-loss</span>
+        <strong>${fmtNum(summary.mean_logloss)}</strong>
+        <em>uniform baseline ${fmtNum(summary.uniform_logloss)}</em>
+      </div>
+      <div class="metric-card">
+        <span>Results through</span>
+        <strong>${summary.results_through ?? data.results_through ?? "—"}</strong>
+        <em>${summary.n} matches graded</em>
+      </div>`;
+  }
+} catch (error) {
+  console.warn("Could not load prediction tracking summary", error);
+}
+</script>
+</body>
+</html>

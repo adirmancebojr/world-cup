@@ -24,8 +24,10 @@ jobs:
           python 03_pipeline/01_fetch_raw.py
           python 03_pipeline/02_clean.py
           python 04_analysis_modules/01_team_strength/01_compute_elo.py
+          python 04_analysis_modules/02_match_model/02_track_predictions.py
           WC_SKIP_STABILITY=1 python 04_analysis_modules/03_simulation/01_simulate.py
           python 03_pipeline/03_build_site_data.py
+          python 03_pipeline/04_update_history.py
       - name: commit refreshed data
         run: |
           git config user.name "wc26-pulse-bot"

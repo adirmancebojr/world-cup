@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WC26 Pulse — open World Cup 2026 odds & stats</title>
 <meta name="description" content="World Cup 2026 statistics and transparent, auditable predictions — updated as the cup progresses. Free data, open model, honest backtests.">
-<link rel="stylesheet" href="./style.css?v=4">
+<link rel="stylesheet" href="./style.css?v=7">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
@@ -15,13 +15,15 @@
 </head>
 <body>
 <header>
-  <div class="brand">WC26&nbsp;<span>PULSE</span></div>
+  <a class="brand" href="./index.html" aria-label="WC26 Pulse home">WC26&nbsp;<span>PULSE</span></a>
   <nav>
     <a href="#odds">Odds</a>
+    <a href="#prediction-results">Results</a>
     <a href="#matches">Matches</a>
     <a href="#groups">Groups</a>
     <a href="#scorers">Scorers</a>
-    <a href="./MODEL.md" class="badge" title="Pre-registered, backtested, and honest about what failed">⚖ honest model</a>
+    <a href="./methodology.html" class="badge" title="Read the model methodology and backtest notes">Methodology</a>
+    <a href="./agentic-ds.html" class="badge" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
   </nav>
   <div class="updated" id="updated">…</div>
 </header>
@@ -46,7 +48,20 @@
 <main>
   <section id="odds">
     <h2>Champion odds <span class="h2-note">20,000 tournament simulations · seed 42</span></h2>
+    <div id="odds-time" hidden>
+      <button id="odds-prev" aria-label="previous match-state">‹</button>
+      <input id="odds-scrub" type="range" min="0" step="1" value="0" aria-label="champion-odds timeline">
+      <button id="odds-next" aria-label="next match-state">›</button>
+      <button id="odds-play" aria-label="play timeline">▶</button>
+      <span id="odds-time-label"></span>
+    </div>
     <div id="odds-list"></div>
+  </section>
+
+  <section id="prediction-results">
+    <h2>Prediction results <span class="h2-note">completed matches only · outcome uses raw-Elo headline · score uses experimental Poisson</span></h2>
+    <div id="prediction-summary"></div>
+    <div id="prediction-list"></div>
   </section>
 
   <section id="matches">
@@ -60,8 +75,9 @@
   </section>
 
   <section id="groups">
-    <h2>Groups <span class="h2-note">advance % = reach the round of 32</span></h2>
+    <h2>Groups <span class="h2-note">advance % = reach the round of 32 · select a group for its fixtures</span></h2>
     <div id="group-grid"></div>
+    <div id="group-detail"></div>
   </section>
 
   <section id="scorers">
@@ -74,13 +90,16 @@
     <p>Everything here is free, legal, and reproducible. Match results come from the
       <a href="https://github.com/martj42/international_results">CC0 international results dataset</a> and the
       public-domain <a href="https://github.com/openfootball/worldcup.json">openfootball World Cup data</a>
-      (scores appear within minutes–hours, not seconds — this site is honestly <em>near</em>-live).
+      (scores appear within minutes–hours of full-time, not in real time).
       Team strengths are Elo ratings recomputed from scratch over 49,000+ matches since 1872.</p>
     <p><strong>The honest part:</strong> we pre-registered a fancier Poisson scoring model, tested it on the
       2014/2018/2022 World Cups — and it lost to the simple Elo baseline, twice. So the baseline gets the
       headline and the fancy model is demoted to "experimental" scoreline heatmaps. The full story, math,
-      and every logged decision: <a href="./MODEL.md">MODEL.md</a>.
+      and every logged decision: <a href="./methodology.html">methodology</a>.
       The entire prediction history is the repository's git log.</p>
+    <p><strong>The workflow part:</strong> this site is also a case study in
+      <a href="./agentic-ds.html">agentic-ds Skill</a>, a warrant-first data-science skill for making
+      AI-assisted analysis reproducible, transparent, and auditable.</p>
   </section>
 </main>
 
@@ -88,10 +107,9 @@
   Data: <a href="https://github.com/martj42/international_results">martj42/international_results</a> (CC0-1.0) ·
   <a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a> (public domain) ·
   Map: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain) ·
-  Flags: <a href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT) ·
   Built with <a href="https://threejs.org">three.js</a> · Not affiliated with FIFA · No betting advice — entertainment &amp; education only.
 </footer>
 
-<script type="module" src="./main.js?v=11"></script>
+<script type="module" src="./main.js?v=17"></script>
 </body>
 </html>

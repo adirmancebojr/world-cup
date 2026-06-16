@@ -1,0 +1,11 @@
+{
+  "n": 12,
+  "outcome_correct": 6,
+  "outcome_pct": 0.5,
+  "score_correct": 3,
+  "score_pct": 0.25,
+  "mean_prob_actual": 0.3869,
+  "mean_logloss": 1.0614,
+  "uniform_logloss": 1.0986,
+  "results_through": "2026-06-14"
+}

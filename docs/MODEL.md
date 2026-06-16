@@ -57,6 +57,15 @@ The spec required the model to beat two baselines on log-loss over **192 held-ou
 
 What *did* pass: **calibration** (C02 — max reliability gap 7pp, band 10pp), **simulator consistency** (C03 — all structural identities exact), and **seed stability** (C04 — champion odds move < 0.8pp across seeds).
 
+### 6.1 Tracking the live predictions (the "Results" scoreboard)
+
+Every finished 2026 match is graded against the prediction the site showed **before kickoff** — no hindsight. For each played match we recompute, from the leakage-free pre-match Elo in `matches_elo.csv` (the ratings as of just before that match):
+
+- **Outcome:** the headline raw-Elo W/D/L; we score whether its most-likely outcome matched the result.
+- **Score:** the experimental Poisson most-likely scoreline; we score exact matches.
+
+We report running accuracy on both, the average probability the model gave the *actual* result, and mean log-loss against the uniform 1.099 baseline (lower = better than a coin flip). It is fully reproducible from the committed data via [`04_analysis_modules/02_match_model/02_track_predictions.py`](04_analysis_modules/02_match_model/02_track_predictions.py) — no snapshot capture, so anyone can recompute the scoreboard and get the same numbers.
+
 ## 7. Tournament simulation
 
 20,000 Monte Carlo replays of the remaining tournament (seed 42), after every data refresh:
@@ -71,7 +80,7 @@ What *did* pass: **calibration** (C02 — max reliability gap 7pp, band 10pp), *
 ## 8. Known limitations (pre-registered or logged)
 
 - No player-level information: injuries, suspensions, squad quality changes are invisible until they show up in results.
-- "Live" means near-live: sources update within minutes–hours, not seconds (D02).
+- Result updates are delayed by the public sources; the site does not claim real-time coverage (D02).
 - Knockout scores in the historical backtest include extra time (the dataset's convention).
 - Group tie-break randomness stands in for head-to-head; third-place allocation is a constraint-respecting approximation of FIFA's table (D05).
 - The experimental Poisson layer failed its headline test (§6) — treat scoreline heatmaps as illustrative.

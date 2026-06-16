@@ -83,6 +83,14 @@ def main() -> int:
     manifest = json.loads((ROOT / "01_raw_data/manifest.json").read_text())
     of = json.loads((ROOT / "01_raw_data/worldcup2026.json").read_text())
     name_map = dict(pd.read_csv(ROOT / "02_processed_data/name_map.csv").to_numpy())
+    pred_path = ROOT / "04_analysis_modules/02_match_model/tables/predictions_2026.csv"
+    pred_summary_path = ROOT / "04_analysis_modules/02_match_model/tables/prediction_summary.json"
+    predictions = pd.read_csv(pred_path) if pred_path.exists() else pd.DataFrame()
+    prediction_summary = json.loads(pred_summary_path.read_text()) if pred_summary_path.exists() else None
+    prediction_lookup = {
+        (r.date, r.home, r.away): r
+        for r in predictions.itertuples(index=False)
+    } if len(predictions) else {}
     fixture_meta = {}
     for om in of["matches"]:
         if not str(om.get("group", "")).startswith("Group"):
@@ -169,6 +177,22 @@ def main() -> int:
             m.update(kickoff_local=meta["kickoff_local"], kickoff_utc=meta["kickoff_utc"], feed=feed)
         if pd.notna(r.home_score):
             m.update(status="played", hs=int(r.home_score), as_=int(r.away_score))
+            pred = prediction_lookup.get((r.date, r.home_team, r.away_team))
+            if pred:
+                m["prediction"] = dict(
+                    p_home=round(float(pred.p_home), 4),
+                    p_draw=round(float(pred.p_draw), 4),
+                    p_away=round(float(pred.p_away), 4),
+                    pred_outcome=pred.pred_outcome,
+                    actual_outcome=pred.actual_outcome,
+                    outcome_hit=bool(pred.outcome_hit),
+                    top_score=pred.top_score,
+                    top_score_prob=round(float(pred.top_score_prob), 4) if hasattr(pred, "top_score_prob") else None,
+                    actual_score=pred.actual_score,
+                    score_hit=bool(pred.score_hit),
+                    prob_actual=round(float(pred.prob_actual), 4),
+                    logloss=round(float(pred.logloss), 4),
+                )
         else:
             p = mp[(mp["home"] == r.home_team) & (mp["away"] == r.away_team) & (mp["date"] == r.date)]
             m.update(status="upcoming")
@@ -197,6 +221,7 @@ def main() -> int:
         matches_played=int(len(played_rows)),
         headline_model=params["headline"], scoreline_model=params["scoreline_model"],
         n_sims=20000, sim_seed=42,
+        prediction_summary=prediction_summary,
         teams=teams, groups=groups, matches=matches, scorers=top_scorers,
     )
     (OUT / "site_data.json").write_text(json.dumps(data, ensure_ascii=False))

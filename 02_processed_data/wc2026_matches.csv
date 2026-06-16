@@ -3,14 +3,14 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,g
 2026-06-11,South Korea,Czech Republic,2,1,FIFA World Cup,Zapopan,Mexico,True,Group A,,Guadalajara (Zapopan)
 2026-06-12,Canada,Bosnia and Herzegovina,1,1,FIFA World Cup,Toronto,Canada,False,Group B,,Toronto
 2026-06-12,United States,Paraguay,4,1,FIFA World Cup,Inglewood,United States,False,Group D,,Los Angeles (Inglewood)
-2026-06-13,Qatar,Switzerland,,,FIFA World Cup,Santa Clara,United States,True,Group B,,San Francisco Bay Area (Santa Clara)
-2026-06-13,Brazil,Morocco,,,FIFA World Cup,East Rutherford,United States,True,Group C,,New York/New Jersey (East Rutherford)
-2026-06-13,Haiti,Scotland,,,FIFA World Cup,Foxborough,United States,True,Group C,,Boston (Foxborough)
-2026-06-13,Australia,Turkey,,,FIFA World Cup,Vancouver,Canada,True,Group D,,Vancouver
-2026-06-14,Germany,Curaçao,,,FIFA World Cup,Houston,United States,True,Group E,,Houston
-2026-06-14,Ivory Coast,Ecuador,,,FIFA World Cup,Philadelphia,United States,True,Group E,,Philadelphia
-2026-06-14,Netherlands,Japan,,,FIFA World Cup,Arlington,United States,True,Group F,,Dallas (Arlington)
-2026-06-14,Sweden,Tunisia,,,FIFA World Cup,Guadalupe,Mexico,True,Group F,,Monterrey (Guadalupe)
+2026-06-13,Qatar,Switzerland,1,1,FIFA World Cup,Santa Clara,United States,True,Group B,,San Francisco Bay Area (Santa Clara)
+2026-06-13,Brazil,Morocco,1,1,FIFA World Cup,East Rutherford,United States,True,Group C,,New York/New Jersey (East Rutherford)
+2026-06-13,Haiti,Scotland,0,1,FIFA World Cup,Foxborough,United States,True,Group C,,Boston (Foxborough)
+2026-06-13,Australia,Turkey,2,0,FIFA World Cup,Vancouver,Canada,True,Group D,,Vancouver
+2026-06-14,Germany,Curaçao,7,1,FIFA World Cup,Houston,United States,True,Group E,,Houston
+2026-06-14,Ivory Coast,Ecuador,1,0,FIFA World Cup,Philadelphia,United States,True,Group E,,Philadelphia
+2026-06-14,Netherlands,Japan,2,2,FIFA World Cup,Arlington,United States,True,Group F,,Dallas (Arlington)
+2026-06-14,Sweden,Tunisia,5,1,FIFA World Cup,Guadalupe,Mexico,True,Group F,,Monterrey (Guadalupe)
 2026-06-15,Belgium,Egypt,,,FIFA World Cup,Seattle,United States,True,Group G,,Seattle
 2026-06-15,Iran,New Zealand,,,FIFA World Cup,Inglewood,United States,True,Group G,,Los Angeles (Inglewood)
 2026-06-15,Spain,Cape Verde,,,FIFA World Cup,Atlanta,United States,True,Group H,,Atlanta

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agentic-ds — WC26 Pulse</title>
+<meta name="description" content="How the agentic-ds warrant-first workflow made WC26 Pulse reproducible, transparent, and auditable.">
+<link rel="stylesheet" href="./style.css?v=7">
+</head>
+<body class="methodology-page">
+<header>
+  <a class="brand" href="./index.html" aria-label="WC26 Pulse home">WC26&nbsp;<span>PULSE</span></a>
+  <nav>
+    <a href="./index.html#odds">Odds</a>
+    <a href="./index.html#prediction-results">Results</a>
+    <a href="./index.html#matches">Matches</a>
+    <a href="./index.html#groups">Groups</a>
+    <a href="./index.html#scorers">Scorers</a>
+    <a href="./methodology.html" class="badge" title="Read the model methodology and backtest notes">Methodology</a>
+    <a href="./agentic-ds.html" class="badge" aria-current="page" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
+  </nav>
+</header>
+
+<main class="method-main">
+  <section class="method-hero">
+    <p class="method-kicker">Workflow case study</p>
+    <h1>agentic-ds in practice</h1>
+    <p>WC26 Pulse showcases <strong>agentic-ds</strong>, a guided, warrant-first workflow for AI-assisted data analysis. The skill treats agents as fast producers, not automatic authorities: every important number must be scripted, every claim must survive a challenge, and every gate that changes the story needs human judgment.</p>
+  </section>
+
+  <section class="method-section" aria-labelledby="skill-sources">
+    <h2 id="skill-sources">Skill sources</h2>
+    <p class="method-copy">This description is grounded in the <code>agentic-ds</code> skill files: <code>SKILL.md</code>, <code>references/workflow.md</code>, and <code>references/templates.md</code>. Those files define the workflow as a zero error, warrant-first operating system for data analysis with AI agents.</p>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-summary">
+    <h2 id="agentic-summary">What the skill does</h2>
+    <div class="method-metrics">
+      <div class="metric-card">
+        <span>Operating rule</span>
+        <strong>Zero error</strong>
+        <em>verification is the bottleneck</em>
+      </div>
+      <div class="metric-card">
+        <span>Evidence</span>
+        <strong>Warrants</strong>
+        <em>claims earn trust by tests</em>
+      </div>
+      <div class="metric-card">
+        <span>Memory</span>
+        <strong>Files</strong>
+        <em>chat is not the record</em>
+      </div>
+      <div class="metric-card">
+        <span>Authority</span>
+        <strong>Human gates</strong>
+        <em>agents propose, humans sign</em>
+      </div>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-loop">
+    <h2 id="agentic-loop">The loop</h2>
+    <ol class="method-steps">
+      <li>
+        <strong>Read the state.</strong>
+        <span>Start from <code>STATUS.md</code>, <code>CHECKLIST.md</code>, the decision log, and the latest session log so the agent and human re-enter the same project.</span>
+      </li>
+      <li>
+        <strong>Check for rot.</strong>
+        <span>Use freshness and drift checks to surface stale, missing, orphaned, or unexplained outputs before citing anything.</span>
+      </li>
+      <li>
+        <strong>Orient the user.</strong>
+        <span>Summarize what happened since the last visit, what changed, and what needs judgment, assuming everyone has forgotten the details.</span>
+      </li>
+      <li>
+        <strong>Nudge honestly.</strong>
+        <span>Call out stale outputs, unexplained drift, unfiled results, and unchecked gates instead of hiding them behind progress.</span>
+      </li>
+      <li>
+        <strong>Propose one next step.</strong>
+        <span>The checklist is a gate sequence, not a menu. The agent advances the current gate unless the human redirects.</span>
+      </li>
+      <li>
+        <strong>File as work happens.</strong>
+        <span>Findings, decisions, and caveats are written to files with provenance while they happen, not reconstructed later.</span>
+      </li>
+      <li>
+        <strong>Close with memory.</strong>
+        <span>End by writing the session log, updating the checklist, regenerating status, and checking that the files match the project story.</span>
+      </li>
+    </ol>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-habits">
+    <h2 id="agentic-habits">The six habits</h2>
+    <div class="method-grid">
+      <article class="method-block">
+        <h3>Decide first</h3>
+        <p>Write the question, metric, population, comparison, baseline, and kill condition before the analysis runs.</p>
+      </article>
+      <article class="method-block">
+        <h3>Script numbers</h3>
+        <p>No important number lives only in chat or a notebook. Evidence comes from numbered scripts and saved outputs.</p>
+      </article>
+      <article class="method-block">
+        <h3>File results</h3>
+        <p>A finding or decision is real only when it is recorded with provenance. Conversation is not durable memory.</p>
+      </article>
+      <article class="method-block">
+        <h3>Challenge claims</h3>
+        <p>No claim is supported until it passes a pre-named test that could have killed it.</p>
+      </article>
+      <article class="method-block">
+        <h3>Open and close</h3>
+        <p>Every session starts from project state and ends by updating the shared state.</p>
+      </article>
+      <article class="method-block">
+        <h3>Keep human gates</h3>
+        <p>The agent drafts, computes, and checks. The human signs specs, decisions, supported claims, and final framing.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-applied">
+    <h2 id="agentic-applied">How WC26 Pulse applied it</h2>
+    <div class="method-table-wrap">
+      <table class="method-table">
+        <thead>
+          <tr>
+            <th>agentic-ds mechanic</th>
+            <th>WC26 Pulse evidence</th>
+            <th>Artifact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Interrogate and frame</td>
+            <td>The project defined target quantities, audience, scope, data constraints, and the credibility bar before modeling.</td>
+            <td><code>00_admin/project-brief.md</code></td>
+          </tr>
+          <tr>
+            <td>Pre-register before fitting</td>
+            <td>The model math, training windows, baselines, leakage rules, split design, and challenges were frozen first.</td>
+            <td><code>00_admin/analysis-spec.md</code></td>
+          </tr>
+          <tr>
+            <td>Log decisions</td>
+            <td>Data-source choices, architecture, third-place allocation, the Dixon-Coles retry, and the raw-Elo fallback were recorded as binding decisions.</td>
+            <td><code>00_admin/decision-log.md</code></td>
+          </tr>
+          <tr>
+            <td>Track project state</td>
+            <td>The dashboard reports gates completed, claims status, needs, nudges, pipeline health, and the next step.</td>
+            <td><code>STATUS.md</code> and <code>CHECKLIST.md</code></td>
+          </tr>
+          <tr>
+            <td>Use scripts as source of truth</td>
+            <td>Raw data, cleaned data, Elo ratings, backtests, simulations, prediction tracking, and site JSON are produced by scripts.</td>
+            <td><code>03_pipeline/</code> and <code>04_analysis_modules/</code></td>
+          </tr>
+          <tr>
+            <td>Trace outputs</td>
+            <td>Module audit files map outputs back to the scripts and inputs that produced them.</td>
+            <td><code>*/audit/source_trace.csv</code></td>
+          </tr>
+          <tr>
+            <td>File supported and failed claims</td>
+            <td>The fancier model failed C01 twice, was filed as <code>not_supported</code>, and lost the headline spot.</td>
+            <td><code>05_claims/claims-register.md</code></td>
+          </tr>
+          <tr>
+            <td>Independently recompute headline numbers</td>
+            <td>A second simulator re-derived champion odds from processed data and agreed within Monte Carlo error.</td>
+            <td><code>04_analysis_modules/03_simulation/02_recompute_independent.py</code></td>
+          </tr>
+          <tr>
+            <td>Publish the model card</td>
+            <td>The public methodology explains the math, failure, fallback, prediction tracking, and limitations.</td>
+            <td><a href="./methodology.html">Methodology</a> and <a href="./MODEL.md"><code>MODEL.md</code></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-why">
+    <h2 id="agentic-why">Why this matters here</h2>
+    <div class="method-grid">
+      <article class="method-block">
+        <h3>Reproducible</h3>
+        <p>A stranger can follow the trail from public data to scripts to tables to site JSON. The prediction scoreboard is regenerated from committed data, not manually edited.</p>
+      </article>
+      <article class="method-block">
+        <h3>Transparent</h3>
+        <p>The project tells visitors when a model failed, what replaced it, where public data lags, and which outputs are experimental.</p>
+      </article>
+      <article class="method-block">
+        <h3>Auditable</h3>
+        <p>The claims register, findings, decision log, source traces, session logs, and status dashboard let a reviewer inspect the project mid-flight.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-agents">
+    <h2 id="agentic-agents">What about Claude and Codex?</h2>
+    <div class="method-callout">
+      <p>Working with more than one AI agent is compatible with agentic-ds because the workflow does not trust agent memory. It trusts filed artifacts. Claude, Codex, or any future agent can contribute code and copy, but the project state lives in the brief, spec, decisions, claims, findings, scripts, and dashboard.</p>
+    </div>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-result">
+    <h2 id="agentic-result">The result</h2>
+    <p class="method-copy">WC26 Pulse is not just a prediction site. It is a public demonstration of warrant-first data science: decide before analyzing, script every number, challenge every claim, keep failures visible, and let the human sign the gates.</p>
+  </section>
+</main>
+
+<footer>
+  Data: <a href="https://github.com/martj42/international_results">martj42/international_results</a> (CC0-1.0) ·
+  <a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a> (public domain) ·
+  Map: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain) ·
+  Built with <a href="https://threejs.org">three.js</a> · Not affiliated with FIFA · No betting advice — entertainment &amp; education only.
+</footer>
+</body>
+</html>
