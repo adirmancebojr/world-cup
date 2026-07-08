@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import earcut from "./vendor/earcut.mjs";
 
 const $ = (s) => document.querySelector(s);
 const pct = (p, d = 1) => (p * 100).toFixed(d) + "%";
@@ -329,7 +330,15 @@ function featureMatchesTeam(f, teamName) {
 }
 
 const canvas = $("#scene");
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+} catch (e) {
+  // no WebGL (some sandboxes/old browsers): hide the globe, keep the data views
+  console.warn("WebGL unavailable — globe disabled, rest of the page still renders", e);
+  document.querySelector("#scene-wrap")?.style.setProperty("display", "none");
+  renderer = { setPixelRatio() {}, setSize() {}, render() {}, setAnimationLoop() {}, domElement: canvas };
+}
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(42, 2, 0.1, 300);
@@ -391,9 +400,12 @@ function extrudeRing(ring, h, team) {
   let r = ring.slice();
   if (r.length > 1 && r[0][0] === r[r.length - 1][0] && r[0][1] === r[r.length - 1][1]) r.pop();
   if (r.length < 3) return null;
-  const contour = r.map(([lng, lat]) => new THREE.Vector2(lng, lat));
-  let faces;
-  try { faces = THREE.ShapeUtils.triangulateShape(contour, []); } catch { return null; }
+  // earcut is far more robust than ShapeUtils on complex concave rings
+  // (e.g. Brazil, 203 pts) — ShapeUtils left holes in the top face.
+  const flat = [];
+  for (const [lng, lat] of r) flat.push(lng, lat);
+  const tri = earcut(flat); // flat list of vertex indices, 3 per triangle
+  if (!tri.length) return null;
   const topR = R + h;
   const top = r.map(([lng, lat]) => llv(lat, lng, topR));
   const bot = r.map(([lng, lat]) => llv(lat, lng, R * 1.003));
@@ -413,8 +425,8 @@ function extrudeRing(ring, h, team) {
     pos.push(v.x, v.y, v.z);
     uv.push(u, vv);
   };
-  for (const [a, b, c] of faces) { // top cap
-    pushTop(a); pushTop(b); pushTop(c);
+  for (let k = 0; k < tri.length; k += 3) { // top cap
+    pushTop(tri[k]); pushTop(tri[k + 1]); pushTop(tri[k + 2]);
   }
   const topCount = pos.length / 3;
   for (let i = 0; i < r.length; i++) { // walls
@@ -535,10 +547,15 @@ const matchesById = Object.fromEntries(data.matches.map((m) => [m.id, m]));
 const byChamp = [...data.teams].sort((a, b) => b.p_champion - a.p_champion);
 
 // champion odds as an interactive time scrubber (bar-chart race) ----------
-const ROSTER = byChamp.slice(0, 12);
 const curOdds = Object.fromEntries(data.teams.map((t) => [t.code, t.p_champion]));
 const frames = (history?.snapshots ?? []).slice().sort((a, b) => a.matches_played - b.matches_played);
 if (!frames.length) frames.push({ t: data.results_through, matches_played: data.matches_played ?? 0, odds: curOdds });
+// roster = every team that was in the top 12 on ANY day, so the race keeps teams
+// that led early and faded (e.g. Spain), showing each day's true top 12.
+const teamByCode = Object.fromEntries(data.teams.map((t) => [t.code, t]));
+const rosterCodes = new Set(byChamp.slice(0, 12).map((t) => t.code));
+for (const f of frames) Object.entries(f.odds).sort((a, b) => b[1] - a[1]).slice(0, 12).forEach(([c]) => rosterCodes.add(c));
+const ROSTER = [...rosterCodes].map((c) => teamByCode[c]).filter(Boolean);
 const ROW_H = 34;
 const oddsAt = (f, code) => f.odds[code] ?? curOdds[code] ?? 0;
 const maxOdds = Math.max(0.02, ...ROSTER.flatMap((t) => frames.map((f) => oddsAt(f, t.code))));

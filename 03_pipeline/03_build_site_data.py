@@ -7,10 +7,26 @@ import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "data"
+sys.path.insert(0, str(ROOT / "03_pipeline"))
+import wcmodel  # noqa: E402
+
+HOSTS = {"United States", "Mexico", "Canada"}
+
+
+def ko_odds(rh, ra, hadv, params):
+    """Raw-Elo W/D/L (D07 headline) + experimental top scorelines for a drawn
+    but unplayed knockout match."""
+    pw, pdr, pl = wcmodel.raw_elo_baseline(rh, ra, hadv, params["draw_rate"])
+    lam_h, lam_a = wcmodel.goal_rates(rh, ra, hadv, params["b0"], params["b1"])
+    m = wcmodel.score_matrix(lam_h, lam_a)
+    top = np.unravel_index(np.argsort(m, axis=None)[::-1][:3], m.shape)
+    scores = "; ".join(f"{i}-{j} ({m[i, j]:.0%})" for i, j in zip(*top))
+    return round(pw, 4), round(pdr, 4), round(pl, 4), scores
 
 FIFA_CODES = {
     "Spain": "ESP", "Argentina": "ARG", "France": "FRA", "England": "ENG", "Brazil": "BRA",
@@ -210,6 +226,7 @@ def main() -> int:
     so = pd.read_csv(so_path) if so_path.exists() else pd.DataFrame(columns=["home_team", "away_team", "winner"])
     so_winner = {frozenset((r.home_team, r.away_team)): r.winner for r in so.itertuples()}
     team_names = {t["name"] for t in teams}
+    ground_country = json.loads((ROOT / "02_processed_data/bracket.json").read_text()).get("ground_country", {})
 
     raw = {}
     for om in sorted((x for x in of["matches"] if not str(x.get("group", "")).startswith("Group")), key=lambda x: x["num"]):
@@ -298,6 +315,13 @@ def main() -> int:
                     km["prediction"] = pb
             else:
                 km.update(status="upcoming")
+                if e["team1"] in elo.index and e["team2"] in elo.index:
+                    rh, ra = float(elo.loc[e["team1"], "rating"]), float(elo.loc[e["team2"], "rating"])
+                    g = e["ground"]
+                    hadv = (wcmodel.HOME_ADV if (e["team1"] in HOSTS and ground_country.get(g) == e["team1"]) else 0.0) \
+                        - (wcmodel.HOME_ADV if (e["team2"] in HOSTS and ground_country.get(g) == e["team2"]) else 0.0)
+                    pw, pdr, pl, scores = ko_odds(rh, ra, hadv, params)
+                    km.update(p_home=pw, p_draw=pdr, p_away=pl, exp_scores=scores)
             matches.append(km)
 
     # results/counts across the whole tournament (group + knockout)
