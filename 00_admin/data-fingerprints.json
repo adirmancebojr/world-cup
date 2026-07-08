@@ -4,6 +4,11 @@
       "date": "2026-06-12",
       "sha256": "a68b79ed02623c99",
       "bytes": 7189
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "6498afba130c0d0a",
+      "bytes": 7404
     }
   ],
   "02_processed_data/cleaning_log.txt": [
@@ -20,6 +25,16 @@
     {
       "date": "2026-06-15",
       "sha256": "b30c9b7deb90e2b0",
+      "bytes": 221
+    },
+    {
+      "date": "2026-07-06",
+      "sha256": "c002ee7aab2c443a",
+      "bytes": 438
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "e99234f3723589e3",
       "bytes": 221
     }
   ],
@@ -65,6 +80,42 @@
       "sha256": "58de10318bbcafd3",
       "bytes": 3719720,
       "rows": 49417,
+      "columns": 9,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral"
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "sha256": "be98e3c378f2b3f5",
+      "bytes": 3720025,
+      "rows": 49421,
+      "columns": 9,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "6b6705937330608d",
+      "bytes": 3725772,
+      "rows": 49497,
       "columns": 9,
       "column_names": [
         "date",
@@ -125,6 +176,46 @@
       "sha256": "c525093546a2a1fb",
       "bytes": 5567376,
       "rows": 49417,
+      "columns": 11,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "r_home_pre",
+        "r_away_pre"
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "sha256": "842822f1118ba17a",
+      "bytes": 5567829,
+      "rows": 49421,
+      "columns": 11,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "r_home_pre",
+        "r_away_pre"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "3e0280ea1197cb6d",
+      "bytes": 5576431,
+      "rows": 49497,
       "columns": 11,
       "column_names": [
         "date",
@@ -217,6 +308,48 @@
         "match_num",
         "ground"
       ]
+    },
+    {
+      "date": "2026-07-06",
+      "sha256": "a084cfcf18d180aa",
+      "bytes": 7375,
+      "rows": 72,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "group",
+        "match_num",
+        "ground"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "a2b452b303ded760",
+      "bytes": 9520,
+      "rows": 98,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "home_score",
+        "away_score",
+        "tournament",
+        "city",
+        "country",
+        "neutral",
+        "group",
+        "match_num",
+        "ground"
+      ]
     }
   ],
   "02_processed_data/wc2026_shootouts.csv": [
@@ -225,6 +358,20 @@
       "sha256": "9af6d17e2acdb3bc",
       "bytes": 46,
       "rows": 0,
+      "columns": 5,
+      "column_names": [
+        "date",
+        "home_team",
+        "away_team",
+        "winner",
+        "first_shooter"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "sha256": "bf04a489b2f4c815",
+      "bytes": 185,
+      "rows": 3,
       "columns": 5,
       "column_names": [
         "date",

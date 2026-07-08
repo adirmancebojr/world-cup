@@ -29,12 +29,13 @@ def main() -> int:
     site = json.loads(SITE.read_text())
     snap = snapshot(site)
     hist = json.loads(HIST.read_text()) if HIST.exists() else {"snapshots": []}
-    snaps = [s for s in hist["snapshots"] if s["matches_played"] != snap["matches_played"]]
+    # one snapshot per tournament day: keep the latest state for each date, so a
+    # day's point finalises at end-of-day as its matches complete.
+    snaps = [s for s in hist["snapshots"] if s.get("t") != snap["t"]]
     snaps.append(snap)
-    snaps.sort(key=lambda s: s["matches_played"])
-    hist["snapshots"] = snaps
+    snaps.sort(key=lambda s: (s.get("matches_played", 0), s.get("t") or ""))
     HIST.write_text(json.dumps({"snapshots": snaps}, ensure_ascii=False))
-    print(f"champion_history.json: {len(snaps)} snapshots (latest matches_played={snap['matches_played']})")
+    print(f"champion_history.json: {len(snaps)} snapshots (latest {snap['t']}, {snap['matches_played']} matches)")
     return 0
 
 

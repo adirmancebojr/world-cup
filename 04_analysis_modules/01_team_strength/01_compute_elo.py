@@ -1,5 +1,10 @@
 """Compute Elo ratings per frozen spec Layer 1. Numbered script — every Elo
-number shown anywhere traces here."""
+number shown anywhere traces here.
+
+Set WC_AS_OF=YYYY-MM-DD to replay the tournament as of the end of that day
+(drops matches after the cutoff) — used by the history backfill. Unset =
+current behaviour, byte-identical."""
+import os
 import sys
 from pathlib import Path
 
@@ -18,6 +23,9 @@ MOD = Path(__file__).resolve().parent
 
 def main() -> int:
     matches = pd.read_csv(ROOT / "02_processed_data" / "matches.csv")
+    as_of = os.environ.get("WC_AS_OF")
+    if as_of:
+        matches = matches[matches["date"] <= as_of].reset_index(drop=True)
     with_elo, ratings = wcmodel.run_elo(matches)
 
     # validation: zero-sum conservation + finiteness

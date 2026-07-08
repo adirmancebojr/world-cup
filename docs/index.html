@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WC26 Pulse — open World Cup 2026 odds & stats</title>
-<meta name="description" content="World Cup 2026 statistics and transparent, auditable predictions — updated as the cup progresses. Free data, open model, honest backtests.">
-<link rel="stylesheet" href="./style.css?v=7">
+<meta name="description" content="World Cup 2026 statistics and transparent predictions, built in public from free data and honest about what failed.">
+<link rel="stylesheet" href="./style.css?v=8">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
@@ -19,9 +19,11 @@
   <nav>
     <a href="#odds">Odds</a>
     <a href="#prediction-results">Results</a>
+    <a href="#bracket">Bracket</a>
     <a href="#matches">Matches</a>
     <a href="#groups">Groups</a>
     <a href="#scorers">Scorers</a>
+    <a href="#about">About</a>
     <a href="./methodology.html" class="badge" title="Read the model methodology and backtest notes">Methodology</a>
     <a href="./agentic-ds.html" class="badge" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
   </nav>
@@ -32,9 +34,9 @@
   <canvas id="scene"></canvas>
   <div id="hero-copy">
     <h1>Who wins the World Cup?</h1>
-    <p>All 48 teams raised from the map by their title chance — flags fill each team's territory, while height
-       carries the win probability. Recomputed from public data after every match. Drag to spin · hover a
-       nation · click for its run to the final.</p>
+    <p>WC26 Pulse asks the question in public: not who should win, but what the evidence says today.
+       The flag shows the country; the height shows its chance. When public results land, the map moves,
+       the odds move, and the old prediction stays on the record. Drag to spin · hover a nation · click for its path.</p>
   </div>
   <div id="tooltip" hidden></div>
   <aside id="team-panel" hidden>
@@ -64,6 +66,12 @@
     <div id="prediction-list"></div>
   </section>
 
+  <section id="bracket" hidden>
+    <h2>Knockout bracket <span class="h2-note">results in · winner in blue · predicted odds for upcoming</span></h2>
+    <div id="bracket-tree"></div>
+    <div id="bracket-third"></div>
+  </section>
+
   <section id="matches">
     <h2>Matches <span class="h2-note">odds are the raw-Elo headline model · scorelines are experimental</span></h2>
     <div id="day-nav">
@@ -87,19 +95,20 @@
 
   <section id="about">
     <h2>About this site</h2>
-    <p>Everything here is free, legal, and reproducible. Match results come from the
+    <p>The site is built to be free, legal, and reproducible from the beginning. The match results come from the
       <a href="https://github.com/martj42/international_results">CC0 international results dataset</a> and the
       public-domain <a href="https://github.com/openfootball/worldcup.json">openfootball World Cup data</a>
-      (scores appear within minutes–hours of full-time, not in real time).
-      Team strengths are Elo ratings recomputed from scratch over 49,000+ matches since 1872.</p>
-    <p><strong>The honest part:</strong> we pre-registered a fancier Poisson scoring model, tested it on the
-      2014/2018/2022 World Cups — and it lost to the simple Elo baseline, twice. So the baseline gets the
-      headline and the fancy model is demoted to "experimental" scoreline heatmaps. The full story, math,
-      and every logged decision: <a href="./methodology.html">methodology</a>.
-      The entire prediction history is the repository's git log.</p>
-    <p><strong>The workflow part:</strong> this site is also a case study in
-      <a href="./agentic-ds.html">agentic-ds Skill</a>, a warrant-first data-science skill for making
-      AI-assisted analysis reproducible, transparent, and auditable.</p>
+      (scores can arrive minutes or hours after full-time, so this is not a live feed).
+      The team ratings are Elo ratings replayed from scratch over 49,000+ matches since 1872.</p>
+    <p><strong>The main point:</strong> WC26 Pulse is a case study in
+      <a href="./agentic-ds.html">agentic-ds Skill</a>: a workflow for making data projects with agents
+      trustworthy. Agents can move quickly, but speed is not evidence. The skill makes the work leave a trail:
+      scripts, checks, findings, decisions, and results that can be audited.</p>
+    <p><strong>What that looks like here:</strong> A fancier model tried to beat the simple baseline. The test
+      was pre-registered, run on the 2014, 2018, and 2022 World Cups, and the fancier Poisson model lost. Then it lost
+      again after the one allowed retry. So the loss stays visible, the raw-Elo baseline gets the headline, and the
+      Poisson layer stays only as experimental scoreline context. The math, the decisions, and the failure are
+      here: <a href="./methodology.html">methodology</a>.</p>
   </section>
 </main>
 
@@ -110,6 +119,6 @@
   Built with <a href="https://threejs.org">three.js</a> · Not affiliated with FIFA · No betting advice — entertainment &amp; education only.
 </footer>
 
-<script type="module" src="./main.js?v=17"></script>
+<script type="module" src="./main.js?v=21"></script>
 </body>
 </html>

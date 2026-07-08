@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>agentic-ds — WC26 Pulse</title>
-<meta name="description" content="How the agentic-ds warrant-first workflow made WC26 Pulse reproducible, transparent, and auditable.">
+<meta name="description" content="How the agentic-ds skill makes AI-assisted data projects simpler, guided, reproducible, transparent, and auditable.">
 <link rel="stylesheet" href="./style.css?v=7">
 </head>
 <body class="methodology-page">
@@ -16,6 +16,7 @@
     <a href="./index.html#matches">Matches</a>
     <a href="./index.html#groups">Groups</a>
     <a href="./index.html#scorers">Scorers</a>
+    <a href="./index.html#about">About</a>
     <a href="./methodology.html" class="badge" title="Read the model methodology and backtest notes">Methodology</a>
     <a href="./agentic-ds.html" class="badge" aria-current="page" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
   </nav>
@@ -25,36 +26,44 @@
   <section class="method-hero">
     <p class="method-kicker">Workflow case study</p>
     <h1>agentic-ds in practice</h1>
-    <p>WC26 Pulse showcases <strong>agentic-ds</strong>, a guided, warrant-first workflow for AI-assisted data analysis. The skill treats agents as fast producers, not automatic authorities: every important number must be scripted, every claim must survive a challenge, and every gate that changes the story needs human judgment.</p>
+    <p>Data projects with agents can get heavy fast: commands, files, claims, old decisions, half-remembered checks. <strong>agentic-ds</strong> is meant to make that work less overwhelming. The workflow keeps the next step visible, updates the checklist as the project moves, and protects the same three promises from beginning to end: transparency, reproducibility, and auditability.</p>
   </section>
 
   <section class="method-section" aria-labelledby="skill-sources">
-    <h2 id="skill-sources">Skill sources</h2>
-    <p class="method-copy">This description is grounded in the <code>agentic-ds</code> skill files: <code>SKILL.md</code>, <code>references/workflow.md</code>, and <code>references/templates.md</code>. Those files define the workflow as a zero error, warrant-first operating system for data analysis with AI agents.</p>
+    <h2 id="skill-sources">Credit and sources</h2>
+    <p class="method-copy"><code>agentic-ds</code> builds on Professor Scott Cunningham's <a href="https://github.com/scunning1975/MixtapeTools/tree/main/gtd">GTD skill in MixtapeTools</a>. That work showed a practical way to use agents with external memory, clear next actions, and a record outside the chat. This skill adapts that idea for data projects, where every important claim needs a path back to evidence.</p>
+    <p class="method-copy">This page is also grounded in the local <code>agentic-ds</code> skill files: <code>SKILL.md</code>, <code>references/workflow.md</code>, and <code>references/templates.md</code>.</p>
+  </section>
+
+  <section class="method-section" aria-labelledby="agentic-design">
+    <h2 id="agentic-design">Why keep it simple</h2>
+    <div class="method-callout">
+      <p>The point of the skill is not to make the user learn a private language of commands. Anyone should be able to learn it by using it. The project scope creates the checklist. The checklist guides the work. As the project changes, the checklist changes with it, so the next step is not hidden in memory or scattered across old messages.</p>
+    </div>
   </section>
 
   <section class="method-section" aria-labelledby="agentic-summary">
     <h2 id="agentic-summary">What the skill does</h2>
     <div class="method-metrics">
       <div class="metric-card">
-        <span>Operating rule</span>
-        <strong>Zero error</strong>
-        <em>verification is the bottleneck</em>
+        <span>Project path</span>
+        <strong>Checklist</strong>
+        <em>scope decides the steps</em>
+      </div>
+      <div class="metric-card">
+        <span>Ease of use</span>
+        <strong>Guided</strong>
+        <em>no command maze</em>
       </div>
       <div class="metric-card">
         <span>Evidence</span>
-        <strong>Warrants</strong>
-        <em>claims earn trust by tests</em>
+        <strong>Scripts</strong>
+        <em>numbers need a trail</em>
       </div>
       <div class="metric-card">
-        <span>Memory</span>
-        <strong>Files</strong>
-        <em>chat is not the record</em>
-      </div>
-      <div class="metric-card">
-        <span>Authority</span>
-        <strong>Human gates</strong>
-        <em>agents propose, humans sign</em>
+        <span>Trust</span>
+        <strong>Audit trail</strong>
+        <em>work can be checked</em>
       </div>
     </div>
   </section>
@@ -63,32 +72,32 @@
     <h2 id="agentic-loop">The loop</h2>
     <ol class="method-steps">
       <li>
+        <strong>Define the scope.</strong>
+        <span>Name the question, the data, the output, and the standard of trust before the work starts running ahead.</span>
+      </li>
+      <li>
+        <strong>Build the checklist.</strong>
+        <span>The checklist is not decoration. It is the map: what has to happen, what has happened, and what still needs judgment.</span>
+      </li>
+      <li>
         <strong>Read the state.</strong>
-        <span>Start from <code>STATUS.md</code>, <code>CHECKLIST.md</code>, the decision log, and the latest session log so the agent and human re-enter the same project.</span>
+        <span>Start from <code>STATUS.md</code>, <code>CHECKLIST.md</code>, the decision log, and the latest session log. The project should not depend on someone remembering the last session.</span>
       </li>
       <li>
-        <strong>Check for rot.</strong>
-        <span>Use freshness and drift checks to surface stale, missing, orphaned, or unexplained outputs before citing anything.</span>
+        <strong>Move one step.</strong>
+        <span>The workflow should make the next action plain. Run the current step, record what changed, and resist the urge to turn everything into a new branch of work.</span>
       </li>
       <li>
-        <strong>Orient the user.</strong>
-        <span>Summarize what happened since the last visit, what changed, and what needs judgment, assuming everyone has forgotten the details.</span>
+        <strong>Verify before claiming.</strong>
+        <span>A number is not trusted because an agent produced it. It is trusted when the script, input, check, and decision can be inspected.</span>
       </li>
       <li>
-        <strong>Nudge honestly.</strong>
-        <span>Call out stale outputs, unexplained drift, unfiled results, and unchecked gates instead of hiding them behind progress.</span>
-      </li>
-      <li>
-        <strong>Propose one next step.</strong>
-        <span>The checklist is a gate sequence, not a menu. The agent advances the current gate unless the human redirects.</span>
-      </li>
-      <li>
-        <strong>File as work happens.</strong>
-        <span>Findings, decisions, and caveats are written to files with provenance while they happen, not reconstructed later.</span>
+        <strong>Update the checklist.</strong>
+        <span>Progress changes the project. The checklist has to change too, so the work stays guided instead of becoming a pile of finished and unfinished thoughts.</span>
       </li>
       <li>
         <strong>Close with memory.</strong>
-        <span>End by writing the session log, updating the checklist, regenerating status, and checking that the files match the project story.</span>
+        <span>End with a session log, checklist update, regenerated status, and a check that the files still tell the truth.</span>
       </li>
     </ol>
   </section>
@@ -98,27 +107,27 @@
     <div class="method-grid">
       <article class="method-block">
         <h3>Decide first</h3>
-        <p>Write the question, metric, population, comparison, baseline, and kill condition before the analysis runs.</p>
+        <p>Write the question, metric, population, comparison, baseline, and kill condition before results have a chance to flatter the method.</p>
       </article>
       <article class="method-block">
         <h3>Script numbers</h3>
-        <p>No important number lives only in chat or a notebook. Evidence comes from numbered scripts and saved outputs.</p>
+        <p>No important number gets to live only in chat. Evidence comes from numbered scripts and saved outputs.</p>
       </article>
       <article class="method-block">
         <h3>File results</h3>
-        <p>A finding or decision is real only when it is recorded with provenance. Conversation is not durable memory.</p>
+        <p>A finding is real when it is filed with provenance. Conversation is useful, but it is not memory.</p>
       </article>
       <article class="method-block">
         <h3>Challenge claims</h3>
-        <p>No claim is supported until it passes a pre-named test that could have killed it.</p>
+        <p>No claim is supported until it survives a test that could have killed it.</p>
       </article>
       <article class="method-block">
         <h3>Open and close</h3>
-        <p>Every session starts from project state and ends by updating the shared state.</p>
+        <p>Every session starts from the project state and ends by leaving the next session a better one.</p>
       </article>
       <article class="method-block">
         <h3>Keep human gates</h3>
-        <p>The agent drafts, computes, and checks. The human signs specs, decisions, supported claims, and final framing.</p>
+        <p>The agent can draft, compute, and check. The human still signs the spec, decisions, supported claims, and final story.</p>
       </article>
     </div>
   </section>
@@ -137,22 +146,22 @@
         <tbody>
           <tr>
             <td>Interrogate and frame</td>
-            <td>The project defined target quantities, audience, scope, data constraints, and the credibility bar before modeling.</td>
+            <td>The project named the target quantities, audience, scope, data constraints, and credibility bar before modeling.</td>
             <td><code>00_admin/project-brief.md</code></td>
           </tr>
           <tr>
             <td>Pre-register before fitting</td>
-            <td>The model math, training windows, baselines, leakage rules, split design, and challenges were frozen first.</td>
+            <td>The model math, training windows, baselines, leakage rules, split design, and challenges were frozen before the first fit.</td>
             <td><code>00_admin/analysis-spec.md</code></td>
           </tr>
           <tr>
             <td>Log decisions</td>
-            <td>Data-source choices, architecture, third-place allocation, the Dixon-Coles retry, and the raw-Elo fallback were recorded as binding decisions.</td>
+            <td>Data sources, architecture, the Dixon-Coles retry, and the raw-Elo fallback were recorded as binding choices.</td>
             <td><code>00_admin/decision-log.md</code></td>
           </tr>
           <tr>
             <td>Track project state</td>
-            <td>The dashboard reports gates completed, claims status, needs, nudges, pipeline health, and the next step.</td>
+            <td>The dashboard says where the work stands: gates, claims, needs, nudges, pipeline health, and the next step.</td>
             <td><code>STATUS.md</code> and <code>CHECKLIST.md</code></td>
           </tr>
           <tr>
@@ -167,7 +176,7 @@
           </tr>
           <tr>
             <td>File supported and failed claims</td>
-            <td>The fancier model failed C01 twice, was filed as <code>not_supported</code>, and lost the headline spot.</td>
+            <td>The fancier model failed C01 twice, was filed as <code>not_supported</code>, and lost the headline spot. That mattered.</td>
             <td><code>05_claims/claims-register.md</code></td>
           </tr>
           <tr>
@@ -190,15 +199,15 @@
     <div class="method-grid">
       <article class="method-block">
         <h3>Reproducible</h3>
-        <p>A stranger can follow the trail from public data to scripts to tables to site JSON. The prediction scoreboard is regenerated from committed data, not manually edited.</p>
+        <p>A stranger can follow the trail from public data to scripts to tables to site JSON. The prediction scoreboard is regenerated, not edited by hand.</p>
       </article>
       <article class="method-block">
         <h3>Transparent</h3>
-        <p>The project tells visitors when a model failed, what replaced it, where public data lags, and which outputs are experimental.</p>
+        <p>The site says when the model failed, what replaced it, where the data can lag, and which outputs are experimental.</p>
       </article>
       <article class="method-block">
         <h3>Auditable</h3>
-        <p>The claims register, findings, decision log, source traces, session logs, and status dashboard let a reviewer inspect the project mid-flight.</p>
+        <p>The claims register, findings, decision log, source traces, session logs, and dashboard let someone inspect the work while it is still alive.</p>
       </article>
     </div>
   </section>
@@ -206,13 +215,13 @@
   <section class="method-section" aria-labelledby="agentic-agents">
     <h2 id="agentic-agents">What about Claude and Codex?</h2>
     <div class="method-callout">
-      <p>Working with more than one AI agent is compatible with agentic-ds because the workflow does not trust agent memory. It trusts filed artifacts. Claude, Codex, or any future agent can contribute code and copy, but the project state lives in the brief, spec, decisions, claims, findings, scripts, and dashboard.</p>
+      <p>More than one agent helped build this project. That is not something to hide. It is the reason the workflow matters. Claude, Codex, or any future agent can contribute code and copy, but the project cannot live in an agent's memory. It lives in the brief, spec, decisions, claims, findings, scripts, and dashboard.</p>
     </div>
   </section>
 
   <section class="method-section" aria-labelledby="agentic-result">
     <h2 id="agentic-result">The result</h2>
-    <p class="method-copy">WC26 Pulse is not just a prediction site. It is a public demonstration of warrant-first data science: decide before analyzing, script every number, challenge every claim, keep failures visible, and let the human sign the gates.</p>
+    <p class="method-copy">WC26 Pulse is not only a prediction site. It is an attempt to make the work inspectable: decide before analyzing, script every number, challenge every claim, keep failures visible, and let the human sign the gates.</p>
   </section>
 </main>
 

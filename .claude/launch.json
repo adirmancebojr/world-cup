@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["dev-server.py", "8377", "docs"],
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /private/tmp/claude-501/-Users-adirmancebojr-Documents-world-cup/5eb68091-12f5-4f62-ac13-77c6f9bf2d54/scratchpad/preview-docs && exec python3 -m http.server 8377"],
       "port": 8377
     }
   ]

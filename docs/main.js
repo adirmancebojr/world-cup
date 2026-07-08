@@ -672,7 +672,7 @@ const matchCard = (m) => {
   const time = timeText
     ? `<time class="m-time"${m.kickoff_utc ? ` datetime="${esc(m.kickoff_utc)}"` : ""}${m.kickoff_local ? ` title="match local: ${esc(m.kickoff_local)}"` : ""}>${esc(timeText)}</time>`
     : "";
-  const head = `<div class="m-head"><span>${esc(m.group ?? "")}</span>${time}</div><div class="m-ground">${esc(m.ground ?? "")}</div>`;
+  const head = `<div class="m-head"><span>${esc(m.group ?? m.round ?? "")}</span>${time}</div><div class="m-ground">${esc(m.ground ?? "")}</div>`;
   const phase = matchPhase(m);
   const score = scoreFor(m);
   const href = `#match/${encodeURIComponent(m.id)}`;
@@ -776,6 +776,8 @@ const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${Stri
 const TODAY = todayISO();
 const dayLabel = (iso, opts) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", opts);
 const defaultDay = () => matchDays.includes(TODAY) ? TODAY : (matchDays.find((d) => d > TODAY) ?? matchDays[matchDays.length - 1]);
+const sectionIds = new Set(["odds", "prediction-results", "matches", "groups", "scorers", "about"]);
+let activeDay = defaultDay();
 const currentRoute = () => {
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
   if (h.startsWith("match/")) {
@@ -783,11 +785,14 @@ const currentRoute = () => {
     if (match) return { type: "match", match };
   }
   if (matchDays.includes(h)) return { type: "day", day: h };
-  return { type: "day", day: defaultDay() };
+  if (sectionIds.has(h)) return { type: "section", id: h };
+  return { type: "day", day: activeDay };
 };
 const currentDay = () => {
   const route = currentRoute();
-  return route.type === "match" ? route.match.date : route.day;
+  if (route.type === "match") return route.match.date;
+  if (route.type === "day") return route.day;
+  return activeDay;
 };
 
 function renderStrip(active) {
@@ -805,14 +810,21 @@ function renderDayMatches(d) {
   const body = list.length ? `<div class="match-grid">${list.map(matchCard).join("")}</div>` : `<p class="no-matches">No matches scheduled.</p>`;
   $("#match-list").innerHTML = head + body;
 }
-const selectDay = (d) => { renderStrip(d); renderDayMatches(d); };
+const selectDay = (d) => { activeDay = d; renderStrip(d); renderDayMatches(d); };
 $("#day-strip").addEventListener("click", (e) => { const b = e.target.closest(".day-chip"); if (b) location.hash = b.dataset.day; });
 const step = (dir) => { const i = matchDays.indexOf(currentDay()); location.hash = matchDays[Math.min(matchDays.length - 1, Math.max(0, i + dir))]; };
 $("#day-prev").onclick = () => step(-1);
 $("#day-next").onclick = () => step(1);
+const scrollToSection = (id) => {
+  const scroll = () => document.getElementById(id)?.scrollIntoView({ block: "start" });
+  requestAnimationFrame(() => requestAnimationFrame(scroll));
+  setTimeout(scroll, 600);
+  setTimeout(scroll, 1400);
+};
 function renderRoute() {
   const route = currentRoute();
   if (route.type === "match") renderMatchDetail(route.match);
+  else if (route.type === "section") { selectDay(activeDay); scrollToSection(route.id); }
   else selectDay(route.day);
 }
 window.addEventListener("hashchange", renderRoute);
@@ -850,6 +862,37 @@ function renderPredictionResults() {
   </table></div>`;
 }
 renderPredictionResults();
+
+// knockout bracket
+const ROUND_SHORT = { "Round of 32": "Round of 32", "Round of 16": "Round of 16", "Quarter-final": "Quarterfinals", "Semi-final": "Semifinals", "Final": "Final" };
+const ROUND_ORDER = ["Round of 32", "Round of 16", "Quarter-final", "Semi-final", "Final"];
+const bktFlag = (fifa, resolved) => {
+  const f = resolved ? FLAG_CODE[fifa] : null;
+  return f ? `<img class="bkt-flag" src="./flags/4x3/${f}.svg" alt="" loading="lazy">` : `<span class="bkt-flag ph"></span>`;
+};
+const bktTeamRow = (name, fifa, score, isWin, resolved) =>
+  `<div class="bkt-team ${isWin ? "win" : ""} ${resolved ? "" : "tbd"}">${bktFlag(fifa, resolved)}<span class="bkt-name">${esc(name)}</span><span class="bkt-score">${Number.isFinite(score) ? score : ""}</span></div>`;
+const bktMatch = (b) => `<div class="bkt-match">
+    ${bktTeamRow(b.team1, b.code1, b.hs, !!b.winner && b.winner === b.team1, !!b.code1)}
+    ${bktTeamRow(b.team2, b.code2, b.as_, !!b.winner && b.winner === b.team2, !!b.code2)}
+  </div>`;
+function renderBracket() {
+  const bracket = data.bracket ?? [];
+  const section = $("#bracket");
+  if (!section || !bracket.length) return;
+  const byRound = {};
+  for (const b of bracket) (byRound[b.round] ??= []).push(b);
+  $("#bracket-tree").innerHTML = ROUND_ORDER.map((round) => {
+    const ms = (byRound[round] ?? []).slice().sort((a, b) => a.num - b.num);
+    if (!ms.length) return "";
+    return `<div class="bracket-round"><div class="bkt-round-label">${esc(ROUND_SHORT[round] ?? round)}</div><div class="bkt-col">${ms.map(bktMatch).join("")}</div></div>`;
+  }).join("");
+  const third = bracket.find((b) => b.round === "Match for third place");
+  $("#bracket-third").innerHTML = third
+    ? `<div class="bkt-third"><span class="bkt-third-label">Third place</span>${bktMatch(third)}</div>` : "";
+  section.hidden = false;
+}
+renderBracket();
 
 const groupMatches = (g) => data.matches
   .filter((m) => m.group === `Group ${g}`)

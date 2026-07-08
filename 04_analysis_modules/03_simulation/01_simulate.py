@@ -63,7 +63,14 @@ def main() -> int:
     ratings_df = pd.read_csv(ROOT / "04_analysis_modules/01_team_strength/tables/elo_current.csv")
     params = json.loads((ROOT / "04_analysis_modules/02_match_model/tables/model_params.json").read_text())
     wc = pd.read_csv(ROOT / "02_processed_data/wc2026_matches.csv")
-    bracket = json.loads((ROOT / "02_processed_data/bracket.json").read_text())
+    as_of = os.environ.get("WC_AS_OF")
+    if as_of:  # replay the tournament as of this day: matches after it are unplayed
+        wc.loc[wc["date"] > as_of, ["home_score", "away_score"]] = np.nan
+    # WC_BRACKET_FILE: the history backfill passes an era-correct bracket (the
+    # placeholder bracket for group-stage days) so past snapshots can't leak
+    # knockout draws that weren't known yet. Unset = live bracket.
+    bracket_file = os.environ.get("WC_BRACKET_FILE") or (ROOT / "02_processed_data/bracket.json")
+    bracket = json.loads(Path(bracket_file).read_text())
     b0, b1 = params["b0"], params["b1"]
 
     draw_rate = params["draw_rate"]
@@ -179,6 +186,8 @@ def main() -> int:
             losers: dict[int, int] = {}
 
             def resolve(code: str) -> int:
+                if code in tix:  # already a resolved team (a drawn/played knockout round)
+                    return tix[code]
                 if code.startswith("W"):
                     return winners[int(code[1:])]
                 if code.startswith("L"):

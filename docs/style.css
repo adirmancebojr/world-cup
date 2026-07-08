@@ -149,6 +149,24 @@ h2 { font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem; color:
 }
 .prediction-table td { color: var(--foreground); }
 .prediction-table td:nth-child(2) { font-family: var(--font-mono); font-weight: 700; }
+
+/* knockout bracket */
+#bracket-tree { display: flex; gap: 1.1rem; overflow-x: auto; padding-bottom: .6rem; }
+.bracket-round { display: flex; flex-direction: column; min-width: 172px; flex: 0 0 auto; }
+.bkt-round-label { font-family: var(--font-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 .7rem; text-align: center; }
+.bkt-col { display: flex; flex-direction: column; justify-content: space-around; flex: 1; gap: .55rem; }
+.bkt-match { border: 1px solid var(--border); border-radius: 9px; overflow: hidden; background: var(--surface); }
+.bkt-team { display: flex; align-items: center; gap: .4rem; padding: .32rem .5rem; font-size: .82rem; }
+.bkt-team + .bkt-team { border-top: 1px solid var(--border); }
+.bkt-team.win { background: var(--held-bg); }
+.bkt-team.win .bkt-name, .bkt-team.win .bkt-score { color: var(--held-text); font-weight: 700; }
+.bkt-team.tbd .bkt-name { color: var(--muted); font-style: italic; }
+.bkt-flag { width: 20px; height: 15px; object-fit: cover; border: 1px solid var(--border); border-radius: 2px; flex: 0 0 auto; }
+.bkt-flag.ph { background: var(--border); border-color: transparent; }
+.bkt-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--foreground); }
+.bkt-score { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--foreground); font-family: var(--font-mono); }
+.bkt-third { margin-top: 1.3rem; max-width: 200px; }
+.bkt-third-label { font-family: var(--font-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: block; margin-bottom: .45rem; }
 .prediction-mark, .pred-chip {
   display: inline-flex; align-items: center; width: max-content; border-radius: 999px;
   padding: .08rem .42rem; font-family: var(--font-mono); font-size: .62rem;

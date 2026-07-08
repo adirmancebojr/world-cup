@@ -6,15 +6,15 @@ sum p_sf == 4,4.0,True
 sum p_final == 2,2.0,True
 sum p_champion == 1,1.0,True
 per-team monotone across stages,1.0,True
-"group A expected qualifiers in [2,3]",2.6179,True
-"group B expected qualifiers in [2,3]",2.6407499999999997,True
-"group C expected qualifiers in [2,3]",2.72375,True
-"group D expected qualifiers in [2,3]",2.6607000000000003,True
-"group E expected qualifiers in [2,3]",2.74205,True
-"group F expected qualifiers in [2,3]",2.83025,True
-"group G expected qualifiers in [2,3]",2.6827,True
-"group H expected qualifiers in [2,3]",2.53705,True
-"group I expected qualifiers in [2,3]",2.6525,True
-"group J expected qualifiers in [2,3]",2.62455,True
-"group K expected qualifiers in [2,3]",2.6426,True
-"group L expected qualifiers in [2,3]",2.6452,True
+"group A expected qualifiers in [2,3]",2.0,True
+"group B expected qualifiers in [2,3]",3.0,True
+"group C expected qualifiers in [2,3]",2.0,True
+"group D expected qualifiers in [2,3]",3.0,True
+"group E expected qualifiers in [2,3]",3.0,True
+"group F expected qualifiers in [2,3]",3.0,True
+"group G expected qualifiers in [2,3]",2.0,True
+"group H expected qualifiers in [2,3]",2.0,True
+"group I expected qualifiers in [2,3]",3.0,True
+"group J expected qualifiers in [2,3]",3.0,True
+"group K expected qualifiers in [2,3]",3.0,True
+"group L expected qualifiers in [2,3]",3.0,True

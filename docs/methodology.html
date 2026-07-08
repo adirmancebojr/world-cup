@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Methodology — WC26 Pulse</title>
-<meta name="description" content="How WC26 Pulse builds transparent World Cup 2026 odds, grades predictions, and reports model failures.">
+<meta name="description" content="How WC26 Pulse makes World Cup predictions, grades them, and keeps the model honest when it fails.">
 <link rel="stylesheet" href="./style.css?v=7">
 </head>
 <body class="methodology-page">
@@ -16,6 +16,7 @@
     <a href="./index.html#matches">Matches</a>
     <a href="./index.html#groups">Groups</a>
     <a href="./index.html#scorers">Scorers</a>
+    <a href="./index.html#about">About</a>
     <a href="./methodology.html" class="badge" aria-current="page" title="Read the model methodology and backtest notes">Methodology</a>
     <a href="./agentic-ds.html" class="badge" title="How the agentic-ds workflow was applied here">agentic-ds Skill</a>
   </nav>
@@ -25,7 +26,7 @@
   <section class="method-hero">
     <p class="method-kicker">Model card</p>
     <h1>How the predictions work, exactly</h1>
-    <p>The headline odds come from a simple Elo baseline because it beat the fancier model in the pre-registered backtest. The site still publishes the experimental scoreline layer, but labels it as experimental and tracks both pieces against real results.</p>
+    <p>An impressive model is useful only if it can stay honest. The headline odds come from a simple Elo baseline because it earned the right to be there. The fancier scoreline model is still shown, but it is marked as experimental, and both pieces are graded against the games after they are played.</p>
   </section>
 
   <section class="method-section" aria-labelledby="method-at-a-glance">
@@ -59,15 +60,15 @@
     <div class="method-grid">
       <article class="method-block">
         <h3>Pre-register the test</h3>
-        <p>Metrics, baselines, data filters, and pass/fail thresholds were frozen before fitting the model. That prevents moving the goalposts after seeing results.</p>
+        <p>The metric, baselines, filters, and pass/fail rules were written down before fitting. That keeps the target from moving after seeing the shot.</p>
       </article>
       <article class="method-block">
         <h3>Keep failures visible</h3>
-        <p>The Poisson model failed its headline test, so it does not get top billing. It remains on the site only for scoreline context, with an experimental label.</p>
+        <p>The Poisson model failed the headline test. So it does not get the headline. It remains here only as context, with the word experimental beside it.</p>
       </article>
       <article class="method-block">
         <h3>Trace every number</h3>
-        <p>Each analysis module writes an audit trace. The scheduled pipeline commits updated inputs and outputs, so the prediction history can be diffed.</p>
+        <p>Every number should have a path back to a script and an input. If a prediction changes, the old one should not disappear into memory.</p>
       </article>
     </div>
   </section>
@@ -97,7 +98,7 @@
         </tbody>
       </table>
     </div>
-    <p class="method-note">Raw snapshots are checksummed, cleaned by script, and cross-checked before the site data is rebuilt.</p>
+    <p class="method-note">The raw snapshots are checksummed, cleaned by script, and cross-checked before the site data is rebuilt.</p>
   </section>
 
   <section class="method-section" aria-labelledby="method-pipeline">
@@ -105,30 +106,30 @@
     <ol class="method-steps">
       <li>
         <strong>Replay Elo from scratch.</strong>
-        <span>Every team starts at 1500, then roughly 49,000 men's internationals are replayed from 1872 onward.</span>
+        <span>Every team starts at 1500. Then the script replays roughly 49,000 men's internationals from 1872 onward.</span>
       </li>
       <li>
         <strong>Publish raw-Elo match odds.</strong>
-        <span>The draw rate is estimated from recent competitive internationals; the remaining probability is split by Elo win expectancy.</span>
+        <span>The draw rate comes from recent competitive internationals. The rest is split by the Elo win expectancy.</span>
       </li>
       <li>
         <strong>Generate experimental scorelines.</strong>
-        <span>A Poisson goal model estimates likely scores. It is useful context, but it failed the headline test.</span>
+        <span>A Poisson goal model estimates likely scores. It is useful, but it did not earn trust as the main model.</span>
       </li>
       <li>
         <strong>Simulate the tournament.</strong>
-        <span>20,000 futures run through the 2026 format, including group advancement, third-place slots, knockouts, and in-simulation Elo updates.</span>
+        <span>20,000 futures run through the 2026 format: groups, third-place slots, knockouts, and Elo updates inside each simulated path.</span>
       </li>
       <li>
         <strong>Grade finished matches.</strong>
-        <span>Completed matches are scored against the prediction available before kickoff: outcome for Elo, exact score for Poisson.</span>
+        <span>After a match ends, it is graded against what the site believed before kickoff: outcome for Elo, exact score for Poisson.</span>
       </li>
     </ol>
   </section>
 
   <section class="method-section" aria-labelledby="method-backtest">
     <h2 id="method-backtest">Why raw Elo leads</h2>
-    <p class="method-copy">The pre-registered test used all 192 matches from World Cups 2014, 2018, and 2022. Each tournament was predicted sequentially, with no future results leaking into the model.</p>
+    <p class="method-copy">The pre-registered test used all 192 matches from the 2014, 2018, and 2022 World Cups. Each tournament was predicted in order. No future result was allowed to whisper into the past.</p>
     <div class="method-table-wrap">
       <table class="method-table">
         <thead>
@@ -193,13 +194,13 @@
   <section class="method-section" aria-labelledby="method-limitations">
     <h2 id="method-limitations">Known limits</h2>
     <div class="method-callout">
-      <p>No player-level injuries, suspensions, tactical changes, or squad news are modeled directly. Public result sources can lag real matches, so this site does not claim real-time coverage. Historical knockout scores follow the source dataset's extra-time convention, and lower group tie-break criteria are approximated when needed.</p>
+      <p>There are things this model cannot see. It does not know injuries, suspensions, tactics, or the quiet panic inside a locker room. Public results can lag the real match, so this site does not claim real-time coverage. Historical knockout scores follow the source dataset's extra-time convention, and lower group tie-break rules are approximated when needed.</p>
     </div>
   </section>
 
   <section class="method-section" aria-labelledby="method-reproduce">
     <h2 id="method-reproduce">Reproduce it</h2>
-    <p class="method-copy">The full math and command list live in <a href="./MODEL.md">MODEL.md</a>. The frozen spec and decision log are kept in the repository as audit artifacts.</p>
+    <p class="method-copy">The full math and command list live in <a href="./MODEL.md">MODEL.md</a>. The frozen spec and decision log are there too, because the explanation should not depend on memory.</p>
     <pre class="method-code"><code>python3 04_analysis_modules/02_match_model/01_backtest.py
 python3 04_analysis_modules/02_match_model/02_track_predictions.py
 python3 04_analysis_modules/03_simulation/01_simulate.py

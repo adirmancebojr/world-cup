@@ -18,7 +18,7 @@
 | [martj42/international_results](https://github.com/martj42/international_results) — 49k+ men's internationals, 1872→present, updated within ~1 day | Elo ratings, model fitting, 2026 results | CC0-1.0 |
 | [openfootball/worldcup.json](https://github.com/openfootball/worldcup.json) — 2026 fixtures, groups, bracket, goalscorers | Tournament structure, scorers, cross-validation | Public domain |
 
-Raw snapshots are checksummed in `01_raw_data/manifest.json`. Cleaning is one script ([`03_pipeline/02_clean.py`](03_pipeline/02_clean.py)) that logs every coercion and cross-checks scores between the two sources (build fails on disagreement).
+Raw snapshots are checksummed in `01_raw_data/manifest.json`. Cleaning is one script ([`03_pipeline/02_clean.py`](03_pipeline/02_clean.py)) that logs every coercion and cross-checks scores between the two sources. The build fails on disagreement; when `results.csv` is lagging and openfootball already has a WC 2026 full-time score, the cleaner can fill that missing WC score from openfootball and logs the fill.
 
 ## 3. Layer 1 — Team strength: Elo, recomputed from scratch
 
@@ -57,7 +57,7 @@ The spec required the model to beat two baselines on log-loss over **192 held-ou
 
 What *did* pass: **calibration** (C02 — max reliability gap 7pp, band 10pp), **simulator consistency** (C03 — all structural identities exact), and **seed stability** (C04 — champion odds move < 0.8pp across seeds).
 
-### 6.1 Tracking the live predictions (the "Results" scoreboard)
+### 6.1 Tracking predictions (the "Results" scoreboard)
 
 Every finished 2026 match is graded against the prediction the site showed **before kickoff** — no hindsight. For each played match we recompute, from the leakage-free pre-match Elo in `matches_elo.csv` (the ratings as of just before that match):
 

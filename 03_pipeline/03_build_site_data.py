@@ -76,7 +76,10 @@ def goal_event(goal: dict, team: str, side: str) -> dict:
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     tp = pd.read_csv(ROOT / "04_analysis_modules/03_simulation/tables/team_probs.csv")
-    mp = pd.read_csv(ROOT / "04_analysis_modules/03_simulation/tables/match_probs_group.csv")
+    try:  # empty once the group stage is complete (no remaining group fixtures)
+        mp = pd.read_csv(ROOT / "04_analysis_modules/03_simulation/tables/match_probs_group.csv")
+    except pd.errors.EmptyDataError:
+        mp = pd.DataFrame(columns=["date", "home", "away", "group", "p_home", "p_draw", "p_away", "top_scores"])
     elo = pd.read_csv(ROOT / "04_analysis_modules/01_team_strength/tables/elo_wc48.csv").set_index("team")
     params = json.loads((ROOT / "04_analysis_modules/02_match_model/tables/model_params.json").read_text())
     wc = pd.read_csv(ROOT / "02_processed_data/wc2026_matches.csv")
@@ -202,6 +205,107 @@ def main() -> int:
                          exp_scores=p["top_scores"])
         matches.append(m)
 
+    # ---- knockout bracket: resolve teams from played results ----
+    so_path = ROOT / "02_processed_data/wc2026_shootouts.csv"
+    so = pd.read_csv(so_path) if so_path.exists() else pd.DataFrame(columns=["home_team", "away_team", "winner"])
+    so_winner = {frozenset((r.home_team, r.away_team)): r.winner for r in so.itertuples()}
+    team_names = {t["name"] for t in teams}
+
+    raw = {}
+    for om in sorted((x for x in of["matches"] if not str(x.get("group", "")).startswith("Group")), key=lambda x: x["num"]):
+        ft = (om.get("score") or {}).get("ft")
+        raw[om["num"]] = dict(
+            num=om["num"], round=om["round"], ground=om.get("ground"), date=om.get("date"),
+            team1=name_map.get(om["team1"], om["team1"]), team2=name_map.get(om["team2"], om["team2"]),
+            kickoff_local=om.get("time"),
+            kickoff_utc=parse_kickoff_utc(om.get("date"), om.get("time")) if om.get("time") else None,
+            hs=int(ft[0]) if ft else None, as_=int(ft[1]) if ft else None,
+        )
+
+    def ko_winner(e):
+        if e is None or e["hs"] is None:
+            return None
+        if e["hs"] > e["as_"]:
+            return e["team1"]
+        if e["as_"] > e["hs"]:
+            return e["team2"]
+        return so_winner.get(frozenset((e["team1"], e["team2"])))
+
+    def ko_loser(e):
+        w = ko_winner(e)
+        return None if not w else (e["team2"] if w == e["team1"] else e["team1"])
+
+    for _ in range(6):  # propagate W##/L## references through the rounds
+        for e in raw.values():
+            for side in ("team1", "team2"):
+                c = e[side]
+                if not isinstance(c, str) or c in team_names:
+                    continue
+                if c[:1] in ("W", "L") and c[1:].isdigit() and int(c[1:]) in raw:
+                    r = ko_winner(raw[int(c[1:])]) if c[:1] == "W" else ko_loser(raw[int(c[1:])])
+                    if r:
+                        e[side] = r
+
+    def slot_label(c):
+        if isinstance(c, str) and c[:1] in ("W", "L") and c[1:].isdigit():
+            return ("Winner" if c[0] == "W" else "Loser") + " " + c[1:]
+        return c
+
+    def pred_block(date, home, away):
+        for h, a, flip in ((home, away, False), (away, home, True)):
+            p = prediction_lookup.get((date, h, a))
+            if p is None:
+                continue
+            ts = p.top_score.split("-") if isinstance(p.top_score, str) and "-" in p.top_score else None
+            asc = p.actual_score.split("-") if isinstance(p.actual_score, str) and "-" in p.actual_score else None
+            swap = {"H": "A", "A": "H", "D": "D"}
+            return dict(
+                p_home=round(float(p.p_away if flip else p.p_home), 4),
+                p_draw=round(float(p.p_draw), 4),
+                p_away=round(float(p.p_home if flip else p.p_away), 4),
+                pred_outcome=swap[p.pred_outcome] if flip else p.pred_outcome,
+                actual_outcome=swap[p.actual_outcome] if flip else p.actual_outcome,
+                outcome_hit=bool(p.outcome_hit),
+                top_score=f"{ts[1]}-{ts[0]}" if (flip and ts) else p.top_score,
+                top_score_prob=round(float(p.top_score_prob), 4) if hasattr(p, "top_score_prob") else None,
+                actual_score=f"{asc[1]}-{asc[0]}" if (flip and asc) else p.actual_score,
+                score_hit=bool(p.score_hit),
+                prob_actual=round(float(p.prob_actual), 4), logloss=round(float(p.logloss), 4),
+            )
+        return None
+
+    bracket = []
+    ko_played = 0
+    for num in sorted(raw):
+        e = raw[num]
+        winner = ko_winner(e)
+        bracket.append(dict(
+            num=num, round=e["round"], date=e["date"], ground=e["ground"],
+            team1=slot_label(e["team1"]), team2=slot_label(e["team2"]),
+            code1=code(e["team1"]) if e["team1"] in team_names else None,
+            code2=code(e["team2"]) if e["team2"] in team_names else None,
+            hs=e["hs"], as_=e["as_"], winner=winner, winner_code=code(winner) if winner else None,
+        ))
+        if e["team1"] in team_names and e["team2"] in team_names:
+            km = dict(id=match_id(e["date"], e["team1"], e["team2"]), date=e["date"],
+                      home=e["team1"], away=e["team2"], round=e["round"], ground=e["ground"],
+                      kickoff_local=e["kickoff_local"], kickoff_utc=e["kickoff_utc"])
+            if e["hs"] is not None:
+                km.update(status="played", hs=e["hs"], as_=e["as_"])
+                ko_played += 1
+                pb = pred_block(e["date"], e["team1"], e["team2"])
+                if pb:
+                    km["prediction"] = pb
+            else:
+                km.update(status="upcoming")
+            matches.append(km)
+
+    # results/counts across the whole tournament (group + knockout)
+    ko_dates = [e["date"] for e in raw.values() if e["hs"] is not None]
+    all_dates = list(played_rows["date"]) + ko_dates
+    results_through_all = max(all_dates) if all_dates else None
+    matches_played_all = int(len(played_rows)) + ko_played
+
     # top scorers from openfootball goal records (public domain)
     scorers: dict[str, dict] = {}
     for om in of["matches"]:
@@ -217,12 +321,14 @@ def main() -> int:
     data = dict(
         generated_utc=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         data_pulled_utc=manifest["pulled_utc"],
-        results_through=str(played_rows["date"].max()) if len(played_rows) else None,
-        matches_played=int(len(played_rows)),
+        results_through=results_through_all,
+        matches_played=matches_played_all,
+        group_matches_played=int(len(played_rows)),
+        stage="knockout" if len(mp) == 0 and matches_played_all >= 72 else "group",
         headline_model=params["headline"], scoreline_model=params["scoreline_model"],
         n_sims=20000, sim_seed=42,
         prediction_summary=prediction_summary,
-        teams=teams, groups=groups, matches=matches, scorers=top_scorers,
+        teams=teams, groups=groups, matches=matches, bracket=bracket, scorers=top_scorers,
     )
     (OUT / "site_data.json").write_text(json.dumps(data, ensure_ascii=False))
     (ROOT / "docs" / "MODEL.md").write_text((ROOT / "MODEL.md").read_text())

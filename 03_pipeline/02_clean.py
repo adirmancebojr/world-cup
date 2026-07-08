@@ -76,12 +76,6 @@ def main() -> int:
     df["neutral"] = df["neutral"].astype(bool)
     df = clean_scores(df)
 
-    played = df.dropna(subset=["home_score", "away_score"]).copy()
-    played[["home_score", "away_score"]] = played[["home_score", "away_score"]].astype(int)
-    played = played.sort_values("date", kind="stable").reset_index(drop=True)
-    assert (played["home_score"] >= 0).all() and (played["home_score"] <= 31).all(), "score out of range"
-    log(f"played matches: {len(played):,} ({played['date'].min()} -> {played['date'].max()})")
-
     # --- WC 2026 fixtures + group labels from openfootball ---
     of = json.loads((RAW / "worldcup2026.json").read_text())
     of_matches = of["matches"]
@@ -114,13 +108,22 @@ def main() -> int:
         assert len(hit) == 1, f"fixture {m['date']} {m['team1']} v {m['team2']} -> {h} v {a}: {len(hit)} results.csv rows (name map wrong?)"
         i = hit.index[0]
         wc_rows.loc[i, ["group", "match_num", "ground"]] = (m["group"], m.get("num"), m["ground"])
-        # cross-source score validation on played matches
+        # Cross-source score validation on played matches. If results.csv is
+        # lagging but openfootball already has a World Cup score, use the
+        # public-domain openfootball score as a temporary canonical value.
         ft = (m.get("score") or {}).get("ft")
-        if ft and not pd.isna(wc_rows.loc[i, "home_score"]):
+        if ft:
             if flipped:
                 ft = ft[::-1]
-            rs_ft = [int(wc_rows.loc[i, "home_score"]), int(wc_rows.loc[i, "away_score"])]
-            if rs_ft != ft:
+            rs_missing = pd.isna(wc_rows.loc[i, "home_score"]) or pd.isna(wc_rows.loc[i, "away_score"])
+            if rs_missing:
+                df.loc[i, ["home_score", "away_score"]] = ft
+                wc_rows.loc[i, ["home_score", "away_score"]] = ft
+                log(f"openfootball fill: {wc_rows.loc[i, 'date']} {wc_rows.loc[i, 'home_team']}-{wc_rows.loc[i, 'away_team']} -> {ft[0]}-{ft[1]}")
+            else:
+                rs_ft = [int(wc_rows.loc[i, "home_score"]), int(wc_rows.loc[i, "away_score"])]
+                if rs_ft == ft:
+                    continue
                 mismatches += 1
                 log(f"SCORE MISMATCH {m['date']} {m['team1']}-{m['team2']}: openfootball {ft} vs results.csv {rs_ft}")
     assert wc_rows["group"].notna().sum() == 72, "not all 72 group fixtures matched"
@@ -138,11 +141,14 @@ def main() -> int:
     assert sorted(groups) == list("ABCDEFGHIJKL") and all(len(v) == 4 for v in groups.values())
 
     ko = [m for m in of_matches if not str(m.get("group", "")).startswith("Group")]
+    # once a knockout round is drawn, openfootball fills real team names — map
+    # them to canonical names; leave slot placeholders (1A, 3A/B/C, W74, L101) as-is.
+    ko_name = lambda s: mapping.get(s, s)
     bracket = {
         "groups": groups,
         "ground_country": {m["ground"]: GROUND_COUNTRY.get(m["ground"], "United States") for m in of_matches},
         "knockout": [
-            {"num": m["num"], "round": m["round"], "team1": m["team1"], "team2": m["team2"], "ground": m["ground"], "date": m["date"]}
+            {"num": m["num"], "round": m["round"], "team1": ko_name(m["team1"]), "team2": ko_name(m["team2"]), "ground": m["ground"], "date": m["date"]}
             for m in sorted(ko, key=lambda x: x["num"])
         ],
     }
@@ -150,6 +156,12 @@ def main() -> int:
     # shootout winners for played knockout draws (knockouts begin 2026-06-28)
     so = pd.read_csv(RAW / "shootouts.csv")
     so[(so["date"] >= WC_START) & (so["date"] <= WC_END)].to_csv(OUT / "wc2026_shootouts.csv", index=False)
+
+    played = df.dropna(subset=["home_score", "away_score"]).copy()
+    played[["home_score", "away_score"]] = played[["home_score", "away_score"]].astype(int)
+    played = played.sort_values("date", kind="stable").reset_index(drop=True)
+    assert (played["home_score"] >= 0).all() and (played["home_score"] <= 31).all(), "score out of range"
+    log(f"played matches: {len(played):,} ({played['date'].min()} -> {played['date'].max()})")
 
     played.to_csv(OUT / "matches.csv", index=False)
     wc_rows.sort_values(["date", "match_num"]).to_csv(OUT / "wc2026_matches.csv", index=False)

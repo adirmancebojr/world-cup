@@ -128,6 +128,21 @@ def main():
         fixtures.append((r.home_team, r.away_team, bool(r.neutral), played,
                          int(r.home_score) if played else -1, int(r.away_score) if played else -1))
 
+    # played knockout results are FIXED, not simulated (own implementation)
+    so_path = PROC / "wc2026_shootouts.csv"
+    so = pd.read_csv(so_path) if so_path.exists() else pd.DataFrame(columns=["home_team", "away_team", "winner"])
+    so_win = {frozenset((r.home_team, r.away_team)): r.winner for r in so.itertuples()}
+    ko_played = {}
+    for r in wc[wc["group"].isna() & wc["home_score"].notna()].itertuples():
+        hs, as_ = int(r.home_score), int(r.away_score)
+        if hs != as_:
+            w = r.home_team if hs > as_ else r.away_team
+        else:
+            w = so_win.get(frozenset((r.home_team, r.away_team)))
+            if w is None:
+                continue  # drawn, shootout not in data yet -> simulate it
+        ko_played[frozenset((r.home_team, r.away_team))] = (r.home_team, hs, as_, w)
+
     # knockout bracket
     ko = sorted(bracket["knockout"], key=lambda m: m["num"])
     r32 = [m for m in ko if m["round"] == "Round of 32"]
@@ -182,6 +197,8 @@ def main():
         winners, losers = {}, {}
 
         def team_for(code, mnum, mslot):
+            if code in group_of:  # drawn rounds carry real team names
+                return code
             if code.startswith("W"):
                 return winners[int(code[1:])]
             if code.startswith("L"):
@@ -197,11 +214,18 @@ def main():
                 reach[round_key[m["round"]]][t1] += 1
                 reach[round_key[m["round"]]][t2] += 1
             hadv = host_adv(t1, m["ground"]) - host_adv(t2, m["ground"])
-            g1, g2 = sample_score(rng, r[t1], r[t2], hadv, b0, b1, draw_rate)
-            if g1 == g2:
-                t1_adv = rng.random() < win_exp(r[t1] - r[t2] + hadv)
+            pk = ko_played.get(frozenset((t1, t2)))
+            if pk:
+                hname, g1, g2, w_name = pk
+                if hname != t1:
+                    g1, g2 = g2, g1
+                t1_adv = w_name == t1
             else:
-                t1_adv = g1 > g2
+                g1, g2 = sample_score(rng, r[t1], r[t2], hadv, b0, b1, draw_rate)
+                if g1 == g2:
+                    t1_adv = rng.random() < win_exp(r[t1] - r[t2] + hadv)
+                else:
+                    t1_adv = g1 > g2
             r[t1], r[t2] = update(r[t1], r[t2], hadv, g1, g2)
             w, l = (t1, t2) if t1_adv else (t2, t1)
             winners[m["num"]], losers[m["num"]] = w, l
