@@ -4,7 +4,10 @@
 name: update
 on:
   schedule:
-    - cron: "23 2,8,14,20 * * *"   # 4x daily; last North-America kickoffs end ~06:00 UTC
+    # Daily at 08:17 America/Los_Angeles during the tournament.
+    # GitHub cron is UTC, so this is the morning-after refresh for North America games.
+    # If no public source files changed, the commit step is a no-op.
+    - cron: "17 15 * * *"
   workflow_dispatch:
 permissions:
   contents: write
