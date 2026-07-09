@@ -416,17 +416,33 @@ function extrudeRing(ring, h, team) {
   const minLat = Math.min(...lats), maxLat = Math.max(...lats);
   const spanLng = Math.max(0.001, maxLng - minLng);
   const spanLat = Math.max(0.001, maxLat - minLat);
-  const pushTop = (i) => {
-    const [lng, lat] = r[i];
-    pos.push(top[i].x, top[i].y, top[i].z);
+  // push a lng/lat vertex of the top cap, projected onto the sphere
+  const pushTopLL = (lng, lat) => {
+    const v = llv(lat, lng, topR);
+    pos.push(v.x, v.y, v.z);
     uv.push((lng - minLng) / spanLng, (lat - minLat) / spanLat);
   };
   const pushSide = (v, u, vv) => {
     pos.push(v.x, v.y, v.z);
     uv.push(u, vv);
   };
+  // tessellate large triangles so the flat cap hugs the sphere — otherwise big
+  // countries (Brazil) bow inward between vertices and the occluder pokes
+  // through, leaving a "hole" in the middle of the flag.
+  const MAX_EDGE = 3; // degrees
+  const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  const span = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const emitTri = (a, b, c, depth) => {
+    if (depth <= 0 || Math.max(span(a, b), span(b, c), span(c, a)) <= MAX_EDGE) {
+      pushTopLL(a[0], a[1]); pushTopLL(b[0], b[1]); pushTopLL(c[0], c[1]);
+      return;
+    }
+    const ab = mid(a, b), bc = mid(b, c), ca = mid(c, a);
+    emitTri(a, ab, ca, depth - 1); emitTri(ab, b, bc, depth - 1);
+    emitTri(ca, bc, c, depth - 1); emitTri(ab, bc, ca, depth - 1);
+  };
   for (let k = 0; k < tri.length; k += 3) { // top cap
-    pushTop(tri[k]); pushTop(tri[k + 1]); pushTop(tri[k + 2]);
+    emitTri(r[tri[k]], r[tri[k + 1]], r[tri[k + 2]], 5);
   }
   const topCount = pos.length / 3;
   for (let i = 0; i < r.length; i++) { // walls
@@ -561,8 +577,9 @@ const oddsAt = (f, code) => f.odds[code] ?? curOdds[code] ?? 0;
 const maxOdds = Math.max(0.02, ...ROSTER.flatMap((t) => frames.map((f) => oddsAt(f, t.code))));
 const fmtDay = (iso) => iso ? new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "—";
 
+const TOP_N = 12; // list is capped at 12; teams outside a day's top 12 fade out
 const oddsList = $("#odds-list");
-oddsList.style.height = ROSTER.length * ROW_H + "px";
+oddsList.style.height = Math.min(TOP_N, ROSTER.length) * ROW_H + "px";
 oddsList.innerHTML = "";
 const rowFor = new Map();
 for (const t of ROSTER) {
@@ -576,7 +593,10 @@ function renderOddsAt(i) {
   const f = frames[i];
   [...ROSTER].sort((a, b) => oddsAt(f, b.code) - oddsAt(f, a.code)).forEach((t, r) => {
     const ref = rowFor.get(t.code), o = oddsAt(f, t.code);
-    ref.row.style.transform = `translateY(${r * ROW_H}px)`;
+    const shown = r < TOP_N; // list capped at 12; lower ranks fade out but stay mounted for animation
+    ref.row.style.transform = `translateY(${Math.min(r, TOP_N) * ROW_H}px)`;
+    ref.row.style.opacity = shown ? "1" : "0";
+    ref.row.style.pointerEvents = shown ? "" : "none";
     ref.rank.textContent = r + 1;
     ref.bar.style.width = (o / maxOdds * 100).toFixed(1) + "%";
     ref.val.textContent = pct(o);

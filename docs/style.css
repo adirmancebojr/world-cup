@@ -120,7 +120,7 @@ h2 { font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem; color:
   display: grid; grid-template-columns: 2.2rem 3.4rem 1fr 4.6rem; gap: .7rem;
   align-items: center; font-size: .95rem; will-change: transform;
 }
-#odds-list.animate .odds-row { transition: transform .6s cubic-bezier(.22,.61,.36,1); }
+#odds-list.animate .odds-row { transition: transform .6s cubic-bezier(.22,.61,.36,1), opacity .4s ease; }
 #odds-list.animate .odds-row .bar i { transition: width .6s cubic-bezier(.22,.61,.36,1); }
 .odds-row .rank { color: var(--muted); font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
 .odds-row .code { font-weight: 700; letter-spacing: .04em; color: var(--foreground); }

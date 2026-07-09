@@ -1,4 +1,4 @@
 name map: openfootball 'Bosnia & Herzegovina' -> results 'Bosnia and Herzegovina'
 name map: openfootball 'USA' -> results 'United States'
 cross-source score mismatches: 0
-played matches: 49,497 (1872-11-30 -> 2026-07-05)
+played matches: 49,501 (1872-11-30 -> 2026-07-07)
