@@ -6,7 +6,7 @@
     "team1": "Mexico",
     "team2": "South Africa",
     "score": {"ft": [2, 0], "ht": [1, 0]},
-    "goals1":
+    "goals1": 
      [{"name": "Julián Quiñones", "minute": "9"},
       {"name": "Raúl Jiménez", "minute": "67"}],
     "goals2": [],
@@ -51,7 +51,7 @@
     "team2": "Mexico",
     "score": {"ft": [0, 3], "ht": [0, 0]},
     "goals1": [],
-    "goals2":
+    "goals2": 
      [{"name": "Mateo Chávez", "minute": "55"},
       {"name": "Julián Quiñones", "minute": "61"},
       {"name": "Álvaro Fidalgo", "minute": "90+4"}],
@@ -1142,11 +1142,11 @@
     "team1": "Argentina",
     "team2": "Egypt",
     "score": {"ft": [3, 2], "ht": [0, 1]},
-    "goals1":
+    "goals1": 
      [{"name": "Cristian Romero", "minute": "79"},
       {"name": "Lionel Messi", "minute": "83"},
       {"name": "Enzo Fernández", "minute": "90+2"}],
-    "goals2":
+    "goals2": 
      [{"name": "Yasser Ibrahim", "minute": "15"},
       {"name": "Mostafa Zico", "minute": "67"}],
     "ground": "Atlanta"},
