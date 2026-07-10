@@ -1,11 +1,11 @@
 {
-  "n": 96,
-  "outcome_correct": 61,
-  "outcome_pct": 0.6354,
+  "n": 97,
+  "outcome_correct": 62,
+  "outcome_pct": 0.6392,
   "score_correct": 15,
-  "score_pct": 0.1562,
-  "mean_prob_actual": 0.4645,
-  "mean_logloss": 0.869,
+  "score_pct": 0.1546,
+  "mean_prob_actual": 0.4653,
+  "mean_logloss": 0.8663,
   "uniform_logloss": 1.0986,
-  "results_through": "2026-07-07"
+  "results_through": "2026-07-09"
 }
