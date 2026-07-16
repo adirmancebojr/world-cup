@@ -335,16 +335,16 @@
     {
       "num": 103,
       "round": "Match for third place",
-      "team1": "L101",
-      "team2": "L102",
+      "team1": "France",
+      "team2": "England",
       "ground": "Miami (Miami Gardens)",
       "date": "2026-07-18"
     },
     {
       "num": 104,
       "round": "Final",
-      "team1": "W101",
-      "team2": "W102",
+      "team1": "Spain",
+      "team2": "Argentina",
       "ground": "New York/New Jersey (East Rutherford)",
       "date": "2026-07-19"
     }
