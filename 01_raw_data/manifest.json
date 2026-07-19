@@ -1,10 +1,10 @@
 {
-  "pulled_utc": "2026-07-18T16:10:03.286358+00:00",
+  "pulled_utc": "2026-07-19T16:09:06.303638+00:00",
   "files": {
     "results.csv": {
       "url": "https://raw.githubusercontent.com/martj42/international_results/master/results.csv",
-      "bytes": 3727752,
-      "sha256": "9bb7ae6bac69e6d028ecd1a2c3a040d8590671bc430ccf8ac17f4ad3d1a126ee"
+      "bytes": 3727750,
+      "sha256": "f64b3df118d1e443ab3e244c0d8a21a67d78c8f6b9620cea4b8731cb0a070e27"
     },
     "shootouts.csv": {
       "url": "https://raw.githubusercontent.com/martj42/international_results/master/shootouts.csv",
@@ -13,8 +13,8 @@
     },
     "worldcup2026.json": {
       "url": "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json",
-      "bytes": 42015,
-      "sha256": "688738dff30aecbb1c2f4aad4fb4c1b4356126ed3cda0f420ed903ed1de86c30"
+      "bytes": 42601,
+      "sha256": "427c0e8cbd319b3904e79e3b242af6c925ac0f8384fc67f8c3fc0357d5fd03d7"
     }
   }
 }
