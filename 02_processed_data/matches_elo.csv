@@ -49518,4 +49518,31 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,r
 2026-07-14,France,Spain,0,2,FIFA World Cup,Arlington,United States,True,2229.731476016224,2250.8536794144193
 2026-07-15,England,Argentina,1,2,FIFA World Cup,Atlanta,United States,True,2166.8244341419568,2254.641500018246
 2026-07-18,France,England,4,6,FIFA World Cup,Miami Gardens,United States,True,2187.4638670315885,2144.2497134549512
+2026-07-18,Vietnam,Myanmar,4,0,Friendly,Thai Nguyen,Vietnam,False,1468.5558184919598,1135.8345368862483
 2026-07-19,Spain,Argentina,1,0,FIFA World Cup,East Rutherford,United States,True,2293.1212883990547,2277.2162207052515
+2026-07-24,Cambodia,Singapore,1,2,ASEAN Championship,Phnom Penh,Cambodia,False,1076.818555833472,1293.8862016841342
+2026-07-24,Timor-Leste,Vietnam,0,7,ASEAN Championship,Chonburi,Thailand,True,904.7271002914368,1471.4243992802258
+2026-07-25,Myanmar,Malaysia,1,2,ASEAN Championship,Yangon,Myanmar,False,1132.9659560979824,1481.6493758928425
+2026-07-25,Laos,Thailand,0,5,ASEAN Championship,Vientiane,Laos,False,938.6254752050506,1532.9241239419866
+2026-07-27,Singapore,Timor-Leste,2,0,ASEAN Championship,Kallang,Singapore,False,1304.0149550935369,902.2368928158332
+2026-07-27,Indonesia,Cambodia,5,1,ASEAN Championship,Bogor,Indonesia,False,1503.8483657844733,1066.6898024240693
+2026-07-28,Philippines,Myanmar,1,4,ASEAN Championship,Capas,Philippines,False,1340.058233655807,1127.1801758988386
+2026-07-28,Malaysia,Laos,4,0,ASEAN Championship,Kuala Lumpur,Malaysia,False,1487.4351560919863,935.3303367138575
+2026-07-31,Timor-Leste,Indonesia,0,3,ASEAN Championship,Chonburi,Thailand,True,899.8641936465428,1506.291467503554
+2026-07-31,Vietnam,Singapore,0,0,ASEAN Championship,Hanoi,Vietnam,False,1473.9146067558293,1306.3876542628273
+2026-08-01,Laos,Philippines,1,4,ASEAN Championship,Vientiane,Laos,False,934.0426710327409,1294.9985734224977
+2026-08-01,Thailand,Malaysia,2,0,ASEAN Championship,Bangkok,Thailand,False,1536.2192624331797,1488.7228217731029
+2026-08-03,Cambodia,Timor-Leste,3,0,ASEAN Championship,Phnom Penh,Cambodia,False,1064.2467007049886,898.3116135632282
+2026-08-03,Indonesia,Vietnam,0,3,ASEAN Championship,Bogor,Indonesia,False,1507.8440475868686,1464.2106260459857
+2026-08-04,Myanmar,Laos,7,2,ASEAN Championship,Yangon,Myanmar,False,1172.239836132148,924.4824119147851
+2026-08-04,Philippines,Thailand,0,1,ASEAN Championship,Capas,Philippines,False,1304.5588325404535,1549.7026372016596
+2026-08-07,Vietnam,Cambodia,3,1,ASEAN Championship,Hanoi,Vietnam,False,1500.7339420069857,1073.5848769995487
+2026-08-07,Singapore,Indonesia,1,1,ASEAN Championship,Kallang,Singapore,False,1316.0916349726708,1471.3207316258686
+2026-08-08,Thailand,Myanmar,2,0,ASEAN Championship,Bangkok,Thailand,False,1558.7770443234056,1179.380348687305
+2026-08-08,Malaysia,Philippines,1,0,ASEAN Championship,Kuala Lumpur,Malaysia,False,1475.239447004623,1295.4844254187076
+2026-08-15,Singapore,Thailand,1,3,ASEAN Championship,Kallang,Singapore,False,1318.4561836600792,1561.4565750159811
+2026-08-16,Malaysia,Vietnam,0,2,ASEAN Championship,Kuala Lumpur,Malaysia,False,1480.2354422735773,1502.7990270649377
+2026-08-18,Thailand,Singapore,1,2,ASEAN Championship,Bangkok,Thailand,False,1575.1856164501717,1304.7271422258887
+2026-08-19,Vietnam,Malaysia,2,0,ASEAN Championship,Hanoi,Vietnam,False,1530.2324052284034,1452.8020641101116
+2026-08-22,Thailand,Vietnam,0,2,ASEAN Championship,Bangkok,Thailand,False,1548.364866793935,1542.1466234051236
+2026-08-26,Vietnam,Thailand,2,2,ASEAN Championship,Hanoi,Vietnam,False,1571.3187520541371,1519.1927381449216
