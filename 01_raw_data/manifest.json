@@ -1,10 +1,10 @@
 {
-  "pulled_utc": "2026-10-30T19:55:42.647674+00:00",
+  "pulled_utc": "2026-10-31T19:16:20.876691+00:00",
   "files": {
     "results.csv": {
       "url": "https://raw.githubusercontent.com/martj42/international_results/master/results.csv",
-      "bytes": 3764617,
-      "sha256": "5dcefd1aa0483979ea8378cef5be448d2005609d39945ea162378561a30a6767"
+      "bytes": 3764347,
+      "sha256": "09aac809e317f3004c69720a38addb656c49ebb19f1937deab96f96e3362257a"
     },
     "shootouts.csv": {
       "url": "https://raw.githubusercontent.com/martj42/international_results/master/shootouts.csv",
