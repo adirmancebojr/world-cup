@@ -49939,3 +49939,182 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,r
 2026-10-06,Antigua and Barbuda,Aruba,3,2,CONCACAF Nations League,North Sound,Antigua and Barbuda,False,1127.3929564560528,1239.8414475809388
 2026-10-06,Saint Martin,Bahamas,6,0,CONCACAF Nations League,Saint Croix,United States Virgin Islands,True,1280.59559893211,935.6067044691586
 2026-10-06,Saudi Arabia,United Arab Emirates,2,0,Gulf Cup,Jeddah,Saudi Arabia,False,1723.1786948188403,1693.8302042286589
+2026-11-05,Bangladesh,Bhutan,1,0,SAFF Cup,Dhaka,Bangladesh,False,1111.9590055048143,858.3312832149956
+2026-11-05,Pakistan,India,2,3,SAFF Cup,Dhaka,Bangladesh,True,1118.0460209706357,1250.7404110842872
+2026-11-08,Sri Lanka,Bhutan,2,2,SAFF Cup,Dhaka,Bangladesh,True,1054.3495913932597,854.8659547197473
+2026-11-08,Maldives,Pakistan,0,3,SAFF Cup,Dhaka,Bangladesh,True,988.4528367428336,1108.511693783162
+2026-11-11,Bangladesh,Sri Lanka,4,0,SAFF Cup,Dhaka,Bangladesh,False,1115.4243340000626,1046.573473004209
+2026-11-11,India,Maldives,1,0,SAFF Cup,Dhaka,Bangladesh,True,1260.274738271761,970.9291121960891
+2026-11-11,Vietnam,Taiwan,2,0,VFF Cup,Ninh Bình,Vietnam,False,1530.4703890043086,1060.3980743648738
+2026-11-12,Guyana,Cayman Islands,6,0,CONCACAF Nations League,Georgetown,Guyana,False,1507.556887436075,1047.8162788042057
+2026-11-12,Guadeloupe,Barbados,3,0,CONCACAF Nations League,Le Gosier,Guadeloupe,False,1440.4269474845767,1214.7541521990438
+2026-11-12,Cuba,Bonaire,7,1,CONCACAF Nations League,Havana,Cuba,False,1418.8371871084923,1143.4134141807738
+2026-11-12,Curaçao,Panama,0,0,CONCACAF Nations League,Willemstad,Curaçao,False,1635.5756367624097,1765.7062342833078
+2026-11-12,Malta,Eswatini,1,1,Friendly,Ta' Qali,Malta,False,1361.0835399510897,1247.8228586191572
+2026-11-12,New Zealand,India,5,0,Friendly,Auckland,New Zealand,False,1699.3358761291731,1265.0450597855809
+2026-11-12,Lithuania,Suriname,0,0,Friendly,Kaunas,Lithuania,False,1353.0979858363924,1600.0398934156815
+2026-11-12,Uzbekistan,Russia,2,3,Friendly,Tashkent,Uzbekistan,False,1748.6181263167236,1855.9177901147561
+2026-11-12,Turkey,Belgium,1,2,UEFA Nations League,Izmir,Turkey,False,1853.1224141920013,2038.4345422612319
+2026-11-12,Italy,France,3,1,UEFA Nations League,Milan,Italy,False,1955.8127049214486,2164.370709741937
+2026-11-12,England,Croatia,2,1,UEFA Nations League,London,England,False,2209.9228574942304,1924.7418894625127
+2026-11-12,Czech Republic,Spain,0,2,UEFA Nations League,Prague,Czech Republic,False,1731.6407526441865,2344.292996749036
+2026-11-12,Albania,Finland,2,0,UEFA Nations League,Tirana,Albania,False,1673.2383642275329,1607.9376037715906
+2026-11-12,San Marino,Belarus,0,2,UEFA Nations League,Serravalle,San Marino,False,895.0069474704503,1597.507939010619
+2026-11-12,Montenegro,Latvia,2,1,UEFA Nations League,Podgorica,Montenegro,False,1542.8884157213777,1310.966725120105
+2026-11-12,Armenia,Cyprus,1,1,UEFA Nations League,Yerevan,Armenia,False,1426.5831708161113,1397.5702414242398
+2026-11-12,Ghana,Somalia,2,0,African Cup of Nations qualification,Sekondi-Takoradi,Ghana,False,1622.6491984909078,1077.4200125428981
+2026-11-12,Ivory Coast,Gambia,2,1,African Cup of Nations qualification,Bouaké,Ivory Coast,False,1837.6887526126502,1588.5972222351638
+2026-11-12,Guinea,Eritrea,2,1,African Cup of Nations qualification,Conakry,Guinea,False,1577.5242621728653,1271.9899205813804
+2026-11-12,DR Congo,Sierra Leone,3,1,African Cup of Nations qualification,Kinshasa,DR Congo,False,1790.873622223676,1430.5502139130858
+2026-11-12,Equatorial Guinea,Zimbabwe,0,0,African Cup of Nations qualification,Yaoundé,Cameroon,True,1461.1782174429356,1486.5735318048476
+2026-11-12,Benin,Central African Republic,4,1,African Cup of Nations qualification,Cotonou,Benin,False,1565.1787212092463,1332.643652186676
+2026-11-12,Cameroon,Namibia,2,0,African Cup of Nations qualification,Douala,Cameroon,False,1732.838094129576,1424.184435469206
+2026-11-12,Senegal,Sudan,4,1,African Cup of Nations qualification,Dakar,Senegal,False,1872.973917852314,1467.930613694198
+2026-11-12,Madagascar,Guinea-Bissau,1,1,African Cup of Nations qualification,Meknes,Morocco,True,1495.9752675540824,1469.5825907853368
+2026-11-13,Puerto Rico,Dominica,4,2,CONCACAF Nations League,Georgetown,Guyana,True,1360.844632304569,1133.5034436437156
+2026-11-13,Bermuda,Saint Lucia,1,2,CONCACAF Nations League,Le Gosier,Guadeloupe,True,1258.2855860687125,1285.6755696151956
+2026-11-13,Grenada,Saint Kitts and Nevis,3,2,CONCACAF Nations League,Havana,Cuba,True,1217.6476793689108,1298.290054252359
+2026-11-13,Guatemala,Canada,2,3,CONCACAF Nations League,Guatemala City,Guatemala,False,1656.5306828476696,1847.9181301733702
+2026-11-13,Argentina,Uruguay,1,2,Friendly,Buenos Aires,Argentina,False,2252.3013692283175,1944.6363106197446
+2026-11-13,Colombia,Chile,1,0,Friendly,Cali,Colombia,False,2073.3803874721907,1812.120696362259
+2026-11-13,Singapore,Paraguay,1,4,The Kallang Football Series,Kallang,Singapore,False,1309.9854205394404,1922.606771723357
+2026-11-13,Ecuador,Costa Rica,2,0,Friendly,Quito,Ecuador,False,1942.4468954224042,1721.6661920547328
+2026-11-13,Kuwait,Syria,3,0,Friendly,Kuwait City,Kuwait,False,1448.5505109125077,1598.9395753971116
+2026-11-13,Peru,Bolivia,2,0,Friendly,Lima,Peru,False,1756.0167391455586,1706.7640402277445
+2026-11-13,Tahiti,Cook Islands,4,0,Friendly,Faa'a,Tahiti,False,1491.8871603195948,1141.7653833497961
+2026-11-13,Qatar,Australia,0,3,Friendly,Doha,Qatar,False,1584.9348926129135,1896.5117609679053
+2026-11-13,Saudi Arabia,South Korea,3,2,Friendly,Al Rayyan,Qatar,True,1737.668753536403,1844.0943563081744
+2026-11-13,United Arab Emirates,Honduras,3,1,Friendly,Abu Dhabi,United Arab Emirates,False,1679.3401455110961,1669.7954317081733
+2026-11-13,Netherlands,Greece,7,0,UEFA Nations League,Amsterdam,Netherlands,False,2046.4616178937565,1839.6912580923047
+2026-11-13,Serbia,Germany,1,3,UEFA Nations League,Belgrade,Serbia,False,1753.4846447354946,1977.0874498307917
+2026-11-13,Scotland,North Macedonia,2,1,UEFA Nations League,Glasgow,Scotland,False,1791.9564963786574,1607.2639228053997
+2026-11-13,Slovenia,Switzerland,0,0,UEFA Nations League,Ljubljana,Slovenia,False,1767.8902924410143,2039.8893899694733
+2026-11-13,Slovakia,Faroe Islands,2,2,UEFA Nations League,Košice,Slovakia,False,1739.5673926747354,1446.4770019729872
+2026-11-13,Moldova,Kazakhstan,2,1,UEFA Nations League,Chișinău,Moldova,False,1332.3289576944474,1477.554096425797
+2026-11-13,Luxembourg,Estonia,0,1,UEFA Nations League,Luxembourg,Luxembourg,False,1429.00248885391,1458.1845519276292
+2026-11-13,Bulgaria,Iceland,0,5,UEFA Nations League,Plovdiv,Bulgaria,False,1526.8400927884848,1656.001166466871
+2026-11-13,Andorra,Gibraltar,2,0,UEFA Nations League,Encamp,Andorra,False,1133.5257024640853,1156.364990936062
+2026-11-13,Liechtenstein,Azerbaijan,0,1,UEFA Nations League,Vaduz,Liechtenstein,False,991.563514566719,1408.1134206558434
+2026-11-13,Gabon,Lesotho,2,0,African Cup of Nations qualification,Franceville,Gabon,False,1541.1057230580695,1389.635235107871
+2026-11-13,Morocco,Niger,5,1,African Cup of Nations qualification,Casablanca,Morocco,False,2022.9629342733463,1491.358498127902
+2026-11-13,Egypt,Malawi,5,0,African Cup of Nations qualification,Cairo,Egypt,False,1831.900599374604,1434.344067791934
+2026-11-13,South Africa,Kenya,2,2,African Cup of Nations qualification,Johannesburg,South Africa,False,1724.6698946290066,1451.630939122697
+2026-11-13,Burkina Faso,Mauritania,1,0,African Cup of Nations qualification,Ouagadougou,Burkina Faso,False,1646.6146982620162,1452.4801957763511
+2026-11-13,Comoros,Congo,0,0,African Cup of Nations qualification,Moroni,Comoros,False,1488.5997829045775,1329.2516270866197
+2026-11-13,Tunisia,Libya,0,2,African Cup of Nations qualification,Sfax,Tunisia,False,1633.0820002503415,1504.4938219658104
+2026-11-13,Zambia,Burundi,1,1,African Cup of Nations qualification,Ndola,Zambia,False,1563.5687674556905,1437.2213561695494
+2026-11-13,Mozambique,Ethiopia,0,1,African Cup of Nations qualification,Maputo,Mozambique,False,1531.5903602522717,1391.5567097724868
+2026-11-13,Cape Verde,Liberia,4,2,African Cup of Nations qualification,Praia,Cape Verde,False,1643.3975179318134,1407.438509478465
+2026-11-13,Mali,Rwanda,3,2,African Cup of Nations qualification,Bamako,Mali,False,1746.604649015123,1498.258475357871
+2026-11-13,Nigeria,Tanzania,3,1,African Cup of Nations qualification,Uyo,Nigeria,False,1825.8785058811195,1386.812470928979
+2026-11-13,Iraq,Lebanon,0,0,Basra International Tournament,Basra,Iraq,False,1662.410069442956,1434.244322017132
+2026-11-14,Japan,Brazil,3,2,The Kallang Football Series,Kallang,Singapore,True,1974.0520022897288,2085.625997789124
+2026-11-14,Sint Maarten,French Guiana,1,5,CONCACAF Nations League,Kingstown,Saint Vincent and the Grenadines,True,1234.7557824776638,1462.8289500403068
+2026-11-14,Saint Vincent and the Grenadines,Belize,1,0,CONCACAF Nations League,Kingstown,Saint Vincent and the Grenadines,False,1410.3991419549664,1244.4718311850263
+2026-11-14,United States,Haiti,6,0,CONCACAF Nations League,Miami,United States,False,1885.4632021181571,1694.8531299326773
+2026-11-14,Jamaica,Mexico,3,2,CONCACAF Nations League,Kingston,Jamaica,False,1667.8315652030585,1963.9208983748972
+2026-11-14,Bahrain,Yemen,3,1,Friendly,Zhaoqing,China,True,1462.2400273506369,1334.9331862686374
+2026-11-14,China,Malaysia,2,0,Friendly,Guangzhou,China,False,1496.4287204416062,1492.0920607777014
+2026-11-14,Norway,Wales,3,1,UEFA Nations League,Oslo,Norway,False,1973.079618431505,1740.113354396464
+2026-11-14,Portugal,Denmark,1,4,UEFA Nations League,Braga,Portugal,False,2096.7566865042727,1911.3836117371084
+2026-11-14,Northern Ireland,Ukraine,1,0,UEFA Nations League,Belfast,Northern Ireland,False,1717.2190741241513,1802.9431030420506
+2026-11-14,Georgia,Hungary,0,2,UEFA Nations League,Tbilisi,Georgia,False,1686.5187110457364,1783.6543767105
+2026-11-14,Kosovo,Israel,0,0,UEFA Nations League,Pristina,Kosovo,False,1759.926934039227,1671.277535147681
+2026-11-14,Austria,Republic of Ireland,1,0,UEFA Nations League,Linz,Austria,False,1904.56410503676,1768.5137576605773
+2026-11-14,Sweden,Bosnia and Herzegovina,3,2,UEFA Nations League,Solna,Sweden,False,1829.2593483055803,1725.4509423341642
+2026-11-14,Romania,Poland,2,1,UEFA Nations League,Bucharest,Romania,False,1633.6539007974332,1758.150047594922
+2026-11-14,Angola,South Sudan,2,0,African Cup of Nations qualification,Talatona,Angola,False,1615.7035192486787,1236.8752658306914
+2026-11-14,Uganda,Botswana,1,1,African Cup of Nations qualification,Hoima,Uganda,False,1570.2864027383275,1414.4101625347962
+2026-11-14,Algeria,Togo,1,0,African Cup of Nations qualification,Tizi Ouzou,Algeria,False,1849.256634008855,1488.3930327029389
+2026-11-14,Bangladesh,Pakistan,0,1,SAFF Cup,Dhaka,Bangladesh,False,1130.864131427567,1126.0354183299064
+2026-11-14,India,Bhutan,2,1,SAFF Cup,Dhaka,Bangladesh,True,1263.2801011810886,862.6420731087981
+2026-11-14,Oman,Tajikistan,0,1,King's Cup,Sisaket,Thailand,True,1571.855731918884,1434.0298354398856
+2026-11-14,Thailand,Brunei,6,0,King's Cup,Sisaket,Thailand,False,1533.1420599657545,866.7495376631383
+2026-11-14,Taiwan,Kyrgyzstan,0,3,VFF Cup,Ninh Bình,Vietnam,True,1058.7687216187471,1465.4378836846115
+2026-11-14,Iran,Palestine,2,0,Basra International Tournament,Basra,Iraq,True,1866.8772306800993,1623.6757370723321
+2026-11-14,Basque Country,Venezuela,1,0,Friendly,Bilbao,Spain,False,1799.7008906689227,1822.0767688918465
+2026-11-15,Panama,Curaçao,2,0,CONCACAF Nations League,Panama City,Panama,False,1764.4086431861704,1636.8732278595471
+2026-11-15,New Zealand,India,3,0,Friendly,Christchurch,New Zealand,False,1701.1008347336654,1265.998281501882
+2026-11-15,Suriname,Eswatini,4,0,Friendly,Den Bosch,Netherlands,True,1596.0459105696416,1253.2909186737243
+2026-11-15,Belgium,Italy,4,1,UEFA Nations League,Brussels,Belgium,False,2049.8236040168185,1985.1227552120376
+2026-11-15,France,Turkey,2,1,UEFA Nations League,Bordeaux,France,False,2135.060659451348,1841.7333524364146
+2026-11-15,Croatia,Czech Republic,2,1,UEFA Nations League,Osijek,Croatia,False,1921.795606078771,1729.4048705008236
+2026-11-15,Spain,England,2,3,UEFA Nations League,Madrid,Spain,False,2346.5288788923986,2212.8691408779723
+2026-11-15,Belarus,Albania,0,2,UEFA Nations League,Budapest,Hungary,True,1598.868222545732,1685.7741798336822
+2026-11-15,Finland,San Marino,7,2,UEFA Nations League,Helsinki,Finland,False,1595.4017881654413,893.6466639353375
+2026-11-15,Cyprus,Montenegro,1,4,UEFA Nations League,Limassol,Cyprus,False,1402.8975466310358,1546.7555000328684
+2026-11-15,Latvia,Armenia,0,0,UEFA Nations League,Riga,Latvia,False,1307.0996408086141,1421.2558656093154
+2026-11-16,Tahiti,Cook Islands,3,3,Friendly,Faa'a,Tahiti,False,1494.5013907485372,1139.1511529208537
+2026-11-16,Guyana,Puerto Rico,4,2,CONCACAF Nations League,Georgetown,Guyana,False,1510.0011594340483,1370.416475692437
+2026-11-16,Guadeloupe,Bermuda,4,1,CONCACAF Nations League,Le Gosier,Guadeloupe,False,1447.40924492305,1244.4656630361903
+2026-11-16,Cuba,Grenada,9,0,CONCACAF Nations League,Havana,Cuba,False,1425.4223910046167,1236.0680865414472
+2026-11-16,Canada,Guatemala,4,1,CONCACAF Nations League,Toronto,Canada,False,1859.0611600454788,1645.387652975561
+2026-11-16,Andorra,Azerbaijan,1,3,Friendly,Encamp,Andorra,False,1151.1093235118026,1412.288495840044
+2026-11-16,Germany,Netherlands,5,0,UEFA Nations League,Berlin,Germany,False,1991.9043379321074,2056.320089468522
+2026-11-16,Greece,Serbia,1,0,UEFA Nations League,Volos,Greece,False,1829.8327865175393,1738.6677566341789
+2026-11-16,North Macedonia,Slovenia,0,3,UEFA Nations League,Skopje,North Macedonia,False,1602.385161072258,1774.7635605459316
+2026-11-16,Switzerland,Scotland,4,0,UEFA Nations League,Sankt Gallen,Switzerland,False,2033.016121864556,1796.8352581117992
+2026-11-16,Faroe Islands,Moldova,1,0,UEFA Nations League,Tórshavn,Faroe Islands,False,1458.6494960343252,1349.2705303708085
+2026-11-16,Kazakhstan,Slovakia,2,2,UEFA Nations League,Astana,Kazakhstan,False,1460.612523749436,1727.3948986133973
+2026-11-16,Iceland,Luxembourg,3,0,UEFA Nations League,Reykjavík,Iceland,False,1683.4890930694085,1410.9866832431926
+2026-11-16,Estonia,Bulgaria,2,1,UEFA Nations League,Tallinn,Estonia,False,1476.2003575383467,1499.3521661859472
+2026-11-16,Gibraltar,Malta,1,1,UEFA Nations League,Gibraltar,Gibraltar,False,1138.7813698883447,1355.6154798965226
+2026-11-16,Lithuania,Liechtenstein,2,1,UEFA Nations League,Kaunas,Lithuania,False,1357.0919686824323,987.3884393825183
+2026-11-16,Ghana,Somalia,1,0,African Cup of Nations qualification,Sekondi-Takoradi,Ghana,False,1624.076841861978,1075.992369171828
+2026-11-16,Eritrea,Guinea,1,3,African Cup of Nations qualification,Cairo,Egypt,True,1268.4575098108305,1581.0566729434152
+2026-11-16,Zimbabwe,Equatorial Guinea,3,0,African Cup of Nations qualification,Harare,Zimbabwe,False,1485.1142578804133,1462.6374913673699
+2026-11-16,Central African Republic,Benin,0,1,African Cup of Nations qualification,Douala,Cameroon,True,1323.648172196414,1574.1742011995084
+2026-11-16,Namibia,Cameroon,0,3,African Cup of Nations qualification,Gaborone,Botswana,True,1418.9719215612229,1738.050608037559
+2026-11-16,Sudan,Senegal,2,4,African Cup of Nations qualification,Juba,South Sudan,True,1464.304915063938,1876.5996164825738
+2026-11-17,Russia,Venezuela,2,0,Friendly,Krasnodar,Russia,False,1865.7077198108898,1814.2745236945352
+2026-11-17,Singapore,Brazil,0,7,The Kallang Football Series,Kallang,Singapore,False,1307.3764505005563,2065.9679948016787
+2026-11-17,Japan,Paraguay,1,2,The Kallang Football Series,Kallang,Singapore,True,1993.7100052771739,1925.2157417622411
+2026-11-17,United Arab Emirates,Syria,4,2,Friendly,Ai Ain,United Arab Emirates,False,1689.7614481598234,1578.9191728815208
+2026-11-17,Dominica,Cayman Islands,5,0,CONCACAF Nations League,Georgetown,Guyana,True,1123.9316002558476,1045.3720068062323
+2026-11-17,Saint Lucia,Barbados,2,0,CONCACAF Nations League,Le Gosier,Guadeloupe,True,1299.4954926477178,1207.7718547605705
+2026-11-17,Saint Kitts and Nevis,Bonaire,3,2,CONCACAF Nations League,Havana,Cuba,True,1279.8696470798225,1136.8282102846495
+2026-11-17,Belize,Sint Maarten,1,2,CONCACAF Nations League,Kingstown,Saint Vincent and the Grenadines,True,1239.1355340624627,1222.8306215471423
+2026-11-17,Saint Vincent and the Grenadines,French Guiana,0,1,CONCACAF Nations League,Kingstown,Saint Vincent and the Grenadines,False,1415.73543907753,1474.7541109708284
+2026-11-17,Mexico,Jamaica,1,0,CONCACAF Nations League,Guadalupe,Mexico,False,1941.2524827105008,1690.499980867455
+2026-11-17,United States,Haiti,2,0,CONCACAF Nations League,Cincinnati,United States,False,1895.5382376245734,1684.778094426261
+2026-11-17,Argentina,Costa Rica,7,0,Friendly,Córdoba,Argentina,False,2234.0479239665733,1717.577880740209
+2026-11-17,Chile,Colombia,0,0,Friendly,Santiago,Chile,False,1809.8987435715583,2075.6023402628916
+2026-11-17,Uruguay,Dominican Republic,5,0,Friendly,Maldonado,Uruguay,False,1962.8897558814888,1492.2183594640899
+2026-11-17,China,Bahrain,2,2,Friendly,Zhaoqing,China,False,1507.054844237216,1471.9772010722431
+2026-11-17,Ecuador,Bolivia,2,0,Friendly,Guayaquil,Ecuador,False,1946.535206736928,1697.838641605621
+2026-11-17,Jordan,Australia,2,0,Friendly,Doha,Qatar,True,1714.3188478877598,1904.5022669010068
+2026-11-17,Kuwait,Honduras,0,2,Friendly,Kuwait City,Kuwait,False,1468.5709134280985,1659.374129059446
+2026-11-17,Malaysia,Yemen,2,1,Friendly,Zhaoqing,China,True,1481.4659369820915,1325.1960125470312
+2026-11-17,Qatar,South Korea,0,1,Friendly,Doha,Qatar,False,1576.944386679812,1831.1235233019634
+2026-11-17,Saudi Arabia,Uzbekistan,1,2,Friendly,Al Rayyan,Qatar,True,1750.639586542614,1738.82819662059
+2026-11-17,Wales,Portugal,2,3,UEFA Nations League,Cardiff,Wales,False,1734.343043577842,2052.7665504754423
+2026-11-17,Denmark,Norway,2,3,UEFA Nations League,Copenhagen,Denmark,False,1955.3737477659388,1978.849929250127
+2026-11-17,Hungary,Northern Ireland,1,1,UEFA Nations League,Budapest,Hungary,False,1806.3398673889565,1731.603077541658
+2026-11-17,Ukraine,Georgia,1,0,UEFA Nations League,Košice,Slovakia,True,1788.559099624544,1663.8332203672799
+2026-11-17,Republic of Ireland,Kosovo,3,0,UEFA Nations League,Dublin,Republic of Ireland,False,1762.3807688955546,1752.4983663328676
+2026-11-17,Israel,Austria,1,1,UEFA Nations League,Debrecen,Hungary,True,1678.7061028540404,1910.6970938017828
+2026-11-17,Bosnia and Herzegovina,Romania,2,1,UEFA Nations League,Zenica,Bosnia and Herzegovina,False,1718.362714516915,1649.7097355169371
+2026-11-17,Poland,Sweden,1,1,UEFA Nations League,Wrocław,Poland,False,1742.094212875418,1836.3475761228294
+2026-11-17,Lesotho,Gabon,2,1,African Cup of Nations qualification,Polokwane,South Africa,True,1378.2127825119805,1552.52817565396
+2026-11-17,Morocco,Niger,1,0,African Cup of Nations qualification,Rabat,Morocco,False,2024.8893469950349,1489.4320854062134
+2026-11-17,Malawi,Egypt,0,0,African Cup of Nations qualification,Lilongwe,Malawi,False,1430.027773392475,1836.2168937740632
+2026-11-17,South Sudan,Angola,0,1,African Cup of Nations qualification,Juba,South Sudan,False,1233.2915478315606,1619.2872372478096
+2026-11-17,Gambia,Ivory Coast,2,2,African Cup of Nations qualification,Bakau,Gambia,False,1583.8689938313714,1842.4169810164426
+2026-11-17,Kenya,South Africa,1,2,African Cup of Nations qualification,Nairobi,Kenya,False,1467.4479050250907,1708.852928726613
+2026-11-17,Sierra Leone,DR Congo,1,1,African Cup of Nations qualification,El Jadida,Morocco,True,1426.5902614352703,1794.8335747014914
+2026-11-17,Mauritania,Burkina Faso,1,3,African Cup of Nations qualification,Nouakchott,Mauritania,False,1446.2658419949598,1652.8290520434075
+2026-11-17,Congo,Comoros,0,1,African Cup of Nations qualification,Brazzaville,Congo,False,1341.912320756431,1475.9390892347662
+2026-11-17,Libya,Tunisia,1,1,African Cup of Nations qualification,Tripoli,Libya,False,1551.8033408821893,1585.7724813339626
+2026-11-17,Botswana,Uganda,1,1,African Cup of Nations qualification,Gaborone,Botswana,False,1426.9503285325259,1557.7462367405979
+2026-11-17,Burundi,Zambia,1,1,African Cup of Nations qualification,Bujumbura,Burundi,False,1448.6746680991625,1552.1154555260773
+2026-11-17,Togo,Algeria,3,0,African Cup of Nations qualification,Lomé,Togo,False,1485.7607214883026,1851.8889452234912
+2026-11-17,Ethiopia,Mozambique,0,1,African Cup of Nations qualification,Bahir Dar,Ethiopia,False,1423.5275526021824,1499.619517422576
+2026-11-17,Liberia,Cape Verde,2,0,African Cup of Nations qualification,Monrovia,Liberia,False,1399.8595723986623,1650.976455011616
+2026-11-17,Rwanda,Mali,0,2,African Cup of Nations qualification,Kigali,Rwanda,False,1493.5123286481607,1751.3507957248332
+2026-11-17,Tanzania,Nigeria,0,0,African Cup of Nations qualification,Unguja,Tanzania,False,1384.2337305096141,1828.4572463004845
+2026-11-17,Guinea-Bissau,Madagascar,2,0,African Cup of Nations qualification,Bissau,Guinea-Bissau,False,1471.0989597409466,1494.4588985984726
+2026-11-17,Oman,Brunei,7,0,King's Cup,Sisaket,Thailand,True,1551.19897129354,865.9852432359199
+2026-11-17,Thailand,Tajikistan,3,0,King's Cup,Sisaket,Thailand,False,1533.9063543929728,1454.6865960652297
+2026-11-17,Vietnam,Kyrgyzstan,1,2,VFF Cup,Ninh Bình,Vietnam,False,1532.0997417504352,1470.0466348157308
+2026-11-17,Lebanon,Palestine,0,0,Basra International Tournament,Basra,Iraq,True,1445.3038190355203,1614.7738716283866
+2026-11-17,Iraq,Iran,1,1,Basra International Tournament,Basra,Iraq,False,1651.3505724245676,1875.7790961240448
